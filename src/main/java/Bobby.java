@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -15,12 +16,10 @@ public class Bobby {
     private static final String BY_SEPARATOR = " /by";
     private static final String FROM_SEPARATOR = " /from";
     private static final String TO_SEPARATOR = " /to";
-    private static final int MAX_TASKS = 100;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Task[] tasks = new Task[MAX_TASKS];
-        int taskCount = 0;
+        ArrayList<Task> tasks = new ArrayList<>();
         String banner = " ____        _     _           \n"
                 + "| __ )  ___ | |__ | |__  _   _ \n"
                 + "|  _ \\ / _ \\| '_ \\| '_ \\| | | |\n"
@@ -44,7 +43,7 @@ public class Bobby {
             }
 
             try {
-                taskCount = handleCommand(command, tasks, taskCount);
+                handleCommand(command, tasks);
             } catch (BobbyException e) {
                 System.out.println("Bobby needs a clearer command: " + e.getMessage());
             }
@@ -53,23 +52,20 @@ public class Bobby {
         }
     }
 
-    private static int handleCommand(String command, Task[] tasks, int taskCount) throws BobbyException {
+    private static void handleCommand(String command, ArrayList<Task> tasks) throws BobbyException {
         if (command.equals(LIST_COMMAND)) {
-            printTaskList(tasks, taskCount);
-            return taskCount;
+            printTaskList(tasks);
         } else if (isCommand(command, MARK_COMMAND)) {
-            markTask(command, MARK_COMMAND, tasks, taskCount, true);
-            return taskCount;
+            markTask(command, MARK_COMMAND, tasks, true);
         } else if (isCommand(command, UNMARK_COMMAND)) {
-            markTask(command, UNMARK_COMMAND, tasks, taskCount, false);
-            return taskCount;
+            markTask(command, UNMARK_COMMAND, tasks, false);
         } else if (isCommand(command, TODO_COMMAND)) {
             Task task = new Todo(getDescription(command, TODO_COMMAND, "todo"));
-            return addTask(task, tasks, taskCount);
+            addTask(task, tasks);
         } else if (isCommand(command, DEADLINE_COMMAND)) {
-            return addDeadline(command, tasks, taskCount);
+            addDeadline(command, tasks);
         } else if (isCommand(command, EVENT_COMMAND)) {
-            return addEvent(command, tasks, taskCount);
+            addEvent(command, tasks);
         } else {
             throw new BobbyException("I don't know what that means yet.");
         }
@@ -79,27 +75,28 @@ public class Bobby {
         return command.equals(commandWord) || command.startsWith(commandWord + " ");
     }
 
-    private static void printTaskList(Task[] tasks, int taskCount) {
+    private static void printTaskList(ArrayList<Task> tasks) {
         System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < taskCount; i++) {
-            System.out.println((i + 1) + "." + tasks[i]);
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println((i + 1) + "." + tasks.get(i));
         }
     }
 
-    private static void markTask(String command, String commandWord, Task[] tasks, int taskCount, boolean isDone)
+    private static void markTask(String command, String commandWord, ArrayList<Task> tasks, boolean isDone)
             throws BobbyException {
-        int taskIndex = getTaskIndex(command, commandWord, taskCount);
+        int taskIndex = getTaskIndex(command, commandWord, tasks.size());
+        Task task = tasks.get(taskIndex);
         if (isDone) {
-            tasks[taskIndex].markAsDone();
+            task.markAsDone();
             System.out.println("Nice! I've marked this task as done:");
         } else {
-            tasks[taskIndex].markAsNotDone();
+            task.markAsNotDone();
             System.out.println("OK, I've marked this task as not done yet:");
         }
-        System.out.println("  " + tasks[taskIndex]);
+        System.out.println("  " + task);
     }
 
-    private static int addDeadline(String command, Task[] tasks, int taskCount) throws BobbyException {
+    private static void addDeadline(String command, ArrayList<Task> tasks) throws BobbyException {
         int byIndex = command.indexOf(BY_SEPARATOR);
         if (byIndex == -1) {
             throw new BobbyException("Please tell me the deadline using /by.");
@@ -112,10 +109,10 @@ public class Bobby {
         if (by.isEmpty()) {
             throw new BobbyException("The /by part of a deadline cannot be empty.");
         }
-        return addTask(new Deadline(description, by), tasks, taskCount);
+        addTask(new Deadline(description, by), tasks);
     }
 
-    private static int addEvent(String command, Task[] tasks, int taskCount) throws BobbyException {
+    private static void addEvent(String command, ArrayList<Task> tasks) throws BobbyException {
         int fromIndex = command.indexOf(FROM_SEPARATOR);
         int toIndex = command.indexOf(TO_SEPARATOR);
         if (fromIndex == -1 || toIndex == -1 || toIndex < fromIndex) {
@@ -133,7 +130,7 @@ public class Bobby {
         if (to.isEmpty()) {
             throw new BobbyException("The /to part of an event cannot be empty.");
         }
-        return addTask(new Event(description, from, to), tasks, taskCount);
+        addTask(new Event(description, from, to), tasks);
     }
 
     private static String getDescription(String command, String commandWord, String taskType) throws BobbyException {
@@ -144,14 +141,9 @@ public class Bobby {
         return description;
     }
 
-    private static int addTask(Task task, Task[] tasks, int taskCount) throws BobbyException {
-        if (taskCount == MAX_TASKS) {
-            throw new BobbyException("The task list is full.");
-        }
-        tasks[taskCount] = task;
-        taskCount++;
-        printTaskAdded(task, taskCount);
-        return taskCount;
+    private static void addTask(Task task, ArrayList<Task> tasks) {
+        tasks.add(task);
+        printTaskAdded(task, tasks.size());
     }
 
     private static int getTaskIndex(String command, String commandWord, int taskCount) throws BobbyException {
