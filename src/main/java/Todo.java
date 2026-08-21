@@ -8,16 +8,6 @@ public class Todo extends Task {
      * @param description text that describes the todo
      */
     public Todo(String description) {
-        super(description);
-    }
-
-    /**
-     * Returns this todo in the chatbot's list display format.
-     *
-     * @return todo type, status, and description
-     */
-    @Override
-    public String toString() {
-        return "[T]" + super.toString();
+        super(description, TaskType.TODO);
     }
 }
