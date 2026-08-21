@@ -222,3 +222,65 @@ ____________________________________________________________
 Goodbye! Bobby signing out...
 ____________________________________________________________
 ```
+
+## Test Case: Delete task and renumber list
+
+Aim: Verify that deleting a task removes it, renumbers later tasks, and rejects invalid delete numbers.
+
+```input
+todo read book
+deadline return book /by Sunday
+event project meeting /from Mon 2pm /to 4pm
+delete 2
+list
+delete 5
+delete abc
+bye
+```
+
+```expected
+____________________________________________________________
+ ____        _     _           
+| __ )  ___ | |__ | |__  _   _ 
+|  _ \ / _ \| '_ \| '_ \| | | |
+| |_) | (_) | |_) | |_) | |_| |
+|____/ \___/|_.__/|_.__/ \__, |
+                         |___/ 
+Hello! I'm Bobby.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] read book
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] return book (by: Sunday)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [E][ ] project meeting (from: Mon 2pm to: 4pm)
+Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Noted. I've removed this task:
+  [D][ ] return book (by: Sunday)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][ ] read book
+2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+Bobby needs a clearer command: I couldn't find that task number.
+____________________________________________________________
+____________________________________________________________
+Bobby needs a clearer command: Task numbers should be whole numbers.
+____________________________________________________________
+____________________________________________________________
+Goodbye! Bobby signing out...
+____________________________________________________________
+```
