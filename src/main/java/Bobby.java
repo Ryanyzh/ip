@@ -9,6 +9,12 @@ public class Bobby {
     private static final String LIST_COMMAND = "list";
     private static final String MARK_COMMAND = "mark";
     private static final String UNMARK_COMMAND = "unmark";
+    private static final String TODO_COMMAND = "todo";
+    private static final String DEADLINE_COMMAND = "deadline";
+    private static final String EVENT_COMMAND = "event";
+    private static final String BY_SEPARATOR = " /by ";
+    private static final String FROM_SEPARATOR = " /from ";
+    private static final String TO_SEPARATOR = " /to ";
     private static final int MAX_TASKS = 100;
 
     public static void main(String[] args) {
@@ -60,10 +66,39 @@ public class Bobby {
                 } else {
                     System.out.println("I couldn't find that task number.");
                 }
-            } else {
-                tasks[taskCount] = new Task(command);
+            } else if (command.startsWith(TODO_COMMAND + " ")) {
+                Task task = new Todo(command.substring(TODO_COMMAND.length()).trim());
+                tasks[taskCount] = task;
                 taskCount++;
-                System.out.println("added: " + command);
+                printTaskAdded(task, taskCount);
+            } else if (command.startsWith(DEADLINE_COMMAND + " ")) {
+                int byIndex = command.indexOf(BY_SEPARATOR);
+                if (byIndex == -1) {
+                    System.out.println("Please tell me the deadline using /by.");
+                } else {
+                    String description = command.substring(DEADLINE_COMMAND.length(), byIndex).trim();
+                    String by = command.substring(byIndex + BY_SEPARATOR.length()).trim();
+                    Task task = new Deadline(description, by);
+                    tasks[taskCount] = task;
+                    taskCount++;
+                    printTaskAdded(task, taskCount);
+                }
+            } else if (command.startsWith(EVENT_COMMAND + " ")) {
+                int fromIndex = command.indexOf(FROM_SEPARATOR);
+                int toIndex = command.indexOf(TO_SEPARATOR);
+                if (fromIndex == -1 || toIndex == -1 || toIndex < fromIndex) {
+                    System.out.println("Please tell me the event time using /from and /to.");
+                } else {
+                    String description = command.substring(EVENT_COMMAND.length(), fromIndex).trim();
+                    String from = command.substring(fromIndex + FROM_SEPARATOR.length(), toIndex).trim();
+                    String to = command.substring(toIndex + TO_SEPARATOR.length()).trim();
+                    Task task = new Event(description, from, to);
+                    tasks[taskCount] = task;
+                    taskCount++;
+                    printTaskAdded(task, taskCount);
+                }
+            } else {
+                System.out.println("Please start a task with todo, deadline, or event.");
             }
 
             System.out.println(LINE);
@@ -81,5 +116,11 @@ public class Bobby {
 
     private static boolean isValidTaskIndex(int taskIndex, int taskCount) {
         return taskIndex >= 0 && taskIndex < taskCount;
+    }
+
+    private static void printTaskAdded(Task task, int taskCount) {
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + task);
+        System.out.println("Now you have " + taskCount + " tasks in the list.");
     }
 }
