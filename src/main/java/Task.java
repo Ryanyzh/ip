@@ -3,6 +3,7 @@
  */
 public class Task {
     private final String description;
+    private final TaskType type;
     private boolean isDone;
 
     /**
@@ -11,7 +12,18 @@ public class Task {
      * @param description text entered by the user to describe the task
      */
     public Task(String description) {
+        this(description, null);
+    }
+
+    /**
+     * Creates a task that starts out as not done.
+     *
+     * @param description text entered by the user to describe the task
+     * @param type category of the task
+     */
+    public Task(String description, TaskType type) {
         this.description = description;
+        this.type = type;
         this.isDone = false;
     }
 
@@ -36,7 +48,10 @@ public class Task {
      */
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + description;
+        if (type == null) {
+            return "[" + getStatusIcon() + "] " + description;
+        }
+        return "[" + type.getSymbol() + "][" + getStatusIcon() + "] " + description;
     }
 
     private String getStatusIcon() {
