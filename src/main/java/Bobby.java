@@ -10,6 +10,7 @@ public class Bobby {
     private static final String LIST_COMMAND = "list";
     private static final String MARK_COMMAND = "mark";
     private static final String UNMARK_COMMAND = "unmark";
+    private static final String DELETE_COMMAND = "delete";
     private static final String TODO_COMMAND = "todo";
     private static final String DEADLINE_COMMAND = "deadline";
     private static final String EVENT_COMMAND = "event";
@@ -59,6 +60,8 @@ public class Bobby {
             markTask(command, MARK_COMMAND, tasks, true);
         } else if (isCommand(command, UNMARK_COMMAND)) {
             markTask(command, UNMARK_COMMAND, tasks, false);
+        } else if (isCommand(command, DELETE_COMMAND)) {
+            deleteTask(command, tasks);
         } else if (isCommand(command, TODO_COMMAND)) {
             Task task = new Todo(getDescription(command, TODO_COMMAND, "todo"));
             addTask(task, tasks);
@@ -94,6 +97,14 @@ public class Bobby {
             System.out.println("OK, I've marked this task as not done yet:");
         }
         System.out.println("  " + task);
+    }
+
+    private static void deleteTask(String command, ArrayList<Task> tasks) throws BobbyException {
+        int taskIndex = getTaskIndex(command, DELETE_COMMAND, tasks.size());
+        Task removedTask = tasks.remove(taskIndex);
+        System.out.println("Noted. I've removed this task:");
+        System.out.println("  " + removedTask);
+        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
     private static void addDeadline(String command, ArrayList<Task> tasks) throws BobbyException {
