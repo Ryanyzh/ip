@@ -36,4 +36,5 @@ After each code update, review `test/ui-test-plan.md` and update it if the behav
 
 Use lightweight tags unless the user requests an annotated tag.
 When proposing or creating a commit message, include enough detail to explain the rationale for the change.
+Use conventional commit messages without level prefixes; record level information using Git tags such as `Level-7` instead.
 Do not commit or push unless explicitly asked.
