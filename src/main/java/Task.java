@@ -10,21 +10,30 @@ public class Task {
      * Creates a task that starts out as not done.
      *
      * @param description text entered by the user to describe the task
-     */
-    public Task(String description) {
-        this(description, null);
-    }
-
-    /**
-     * Creates a task that starts out as not done.
-     *
-     * @param description text entered by the user to describe the task
      * @param type category of the task
      */
     public Task(String description, TaskType type) {
         this.description = description;
         this.type = type;
         this.isDone = false;
+    }
+
+    /**
+     * Returns a line that can be saved in the data file.
+     *
+     * @return serialized task data
+     */
+    public String toStorageString() {
+        return type.getSymbol() + " | " + getStorageStatus() + " | " + description;
+    }
+
+    /**
+     * Returns the task description entered by the user.
+     *
+     * @return task description
+     */
+    protected String getDescription() {
+        return description;
     }
 
     /**
@@ -48,13 +57,14 @@ public class Task {
      */
     @Override
     public String toString() {
-        if (type == null) {
-            return "[" + getStatusIcon() + "] " + description;
-        }
         return "[" + type.getSymbol() + "][" + getStatusIcon() + "] " + description;
     }
 
     private String getStatusIcon() {
         return isDone ? "X" : " ";
+    }
+
+    private String getStorageStatus() {
+        return isDone ? "1" : "0";
     }
 }

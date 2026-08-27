@@ -13,7 +13,8 @@ from pathlib import Path
 DEFAULT_PLAN = Path("test/ui-test-plan.md")
 DEFAULT_CLASSES_DIR = Path("/tmp/ip-ui-test-classes")
 CASE_HEADING_RE = re.compile(r"^## Test Case:\s*(.+?)\s*$", re.MULTILINE)
-FENCE_RE = re.compile(r"```(input|expected)\n(.*?)```", re.DOTALL)
+FENCE_RE = re.compile(r"```(input|expected|data|saved)\n(.*?)```", re.DOTALL)
+DATA_FILE = Path("data/bobby.txt")
 
 
 @dataclass
@@ -22,6 +23,8 @@ class UiTestCase:
     aim: str
     console_input: str
     expected_output: str
+    initial_data: str | None
+    expected_saved_data: str | None
 
 
 def normalize_output(text: str) -> str:
@@ -49,6 +52,8 @@ def parse_test_plan(plan_path: Path) -> list[UiTestCase]:
             aim=aim,
             console_input=normalize_output(fences["input"]),
             expected_output=normalize_output(fences["expected"]),
+            initial_data=normalize_optional_block(fences.get("data")),
+            expected_saved_data=normalize_optional_block(fences.get("saved")),
         ))
 
     if not cases:
@@ -63,6 +68,10 @@ def parse_aim(section: str) -> str:
         if stripped.startswith("Aim:"):
             return stripped.removeprefix("Aim:").strip()
     return ""
+
+
+def normalize_optional_block(text: str | None) -> str | None:
+    return None if text is None else normalize_output(text)
 
 
 def compile_project(repo: Path, classes_dir: Path) -> None:
@@ -96,6 +105,23 @@ def run_case(repo: Path, classes_dir: Path, test_case: UiTestCase) -> str:
     return normalize_output(result.stdout)
 
 
+def prepare_data_file(repo: Path, initial_data: str | None) -> None:
+    data_file = repo / DATA_FILE
+    if data_file.exists():
+        data_file.unlink()
+
+    if initial_data is not None:
+        data_file.parent.mkdir(parents=True, exist_ok=True)
+        data_file.write_text(initial_data, encoding="utf-8")
+
+
+def read_saved_data(repo: Path) -> str:
+    data_file = repo / DATA_FILE
+    if not data_file.exists():
+        return ""
+    return normalize_output(data_file.read_text(encoding="utf-8"))
+
+
 def print_transcript(test_case: UiTestCase, actual_output: str) -> None:
     print(f"## {test_case.name}")
     if test_case.aim:
@@ -110,6 +136,13 @@ def print_transcript(test_case: UiTestCase, actual_output: str) -> None:
     print("```")
     print(actual_output, end="" if actual_output.endswith("\n") else "\n")
     print("```")
+    if test_case.expected_saved_data is not None:
+        print()
+        print("Saved data:")
+        print("```")
+        saved_data = read_saved_data(Path.cwd())
+        print(saved_data, end="" if saved_data.endswith("\n") else "\n")
+        print("```")
     print()
 
 
@@ -134,6 +167,45 @@ def report_failure(test_case: UiTestCase, expected: str, actual: str) -> None:
     print("```")
 
 
+def report_saved_data_failure(test_case: UiTestCase, expected: str, actual: str) -> None:
+    print(f"FAILED: {test_case.name}")
+    if test_case.aim:
+        print(f"Aim: {test_case.aim}")
+    print()
+    print("Console input:")
+    print("```")
+    print(test_case.console_input, end="" if test_case.console_input.endswith("\n") else "\n")
+    print("```")
+    print()
+    print("Expected saved data:")
+    print("```")
+    print(expected, end="" if expected.endswith("\n") else "\n")
+    print("```")
+    print()
+    print("Actual saved data:")
+    print("```")
+    print(actual, end="" if actual.endswith("\n") else "\n")
+    print("```")
+
+
+def backup_data_file(repo: Path) -> str | None:
+    data_file = repo / DATA_FILE
+    if not data_file.exists():
+        return None
+    return data_file.read_text(encoding="utf-8")
+
+
+def restore_data_file(repo: Path, original_data: str | None) -> None:
+    data_file = repo / DATA_FILE
+    if original_data is None:
+        if data_file.exists():
+            data_file.unlink()
+        return
+
+    data_file.parent.mkdir(parents=True, exist_ok=True)
+    data_file.write_text(original_data, encoding="utf-8")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--plan", type=Path, default=DEFAULT_PLAN)
@@ -143,14 +215,24 @@ def main() -> int:
     repo = Path.cwd()
     cases = parse_test_plan(args.plan)
     compile_project(repo, args.classes_dir)
+    original_data = backup_data_file(repo)
 
-    for test_case in cases:
-        actual = run_case(repo, args.classes_dir, test_case)
-        expected = test_case.expected_output
-        if actual != expected:
-            report_failure(test_case, expected, actual)
-            return 1
-        print_transcript(test_case, actual)
+    try:
+        for test_case in cases:
+            prepare_data_file(repo, test_case.initial_data)
+            actual = run_case(repo, args.classes_dir, test_case)
+            expected = test_case.expected_output
+            if actual != expected:
+                report_failure(test_case, expected, actual)
+                return 1
+            if test_case.expected_saved_data is not None:
+                saved_data = read_saved_data(repo)
+                if saved_data != test_case.expected_saved_data:
+                    report_saved_data_failure(test_case, test_case.expected_saved_data, saved_data)
+                    return 1
+            print_transcript(test_case, actual)
+    finally:
+        restore_data_file(repo, original_data)
 
     print(f"PASS: {len(cases)} test case(s)")
     return 0

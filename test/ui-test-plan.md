@@ -284,3 +284,98 @@ ____________________________________________________________
 Goodbye! Bobby signing out...
 ____________________________________________________________
 ```
+
+## Test Case: Load saved tasks
+
+Aim: Verify that tasks saved in data/bobby.txt are loaded when the chatbot starts.
+
+```data
+T | 1 | read book
+D | 0 | return book | Sunday
+E | 0 | project meeting | Mon 2pm | 4pm
+```
+
+```input
+list
+bye
+```
+
+```expected
+____________________________________________________________
+ ____        _     _           
+| __ )  ___ | |__ | |__  _   _ 
+|  _ \ / _ \| '_ \| '_ \| | | |
+| |_) | (_) | |_) | |_) | |_| |
+|____/ \___/|_.__/|_.__/ \__, |
+                         |___/ 
+Hello! I'm Bobby.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][X] read book
+2.[D][ ] return book (by: Sunday)
+3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+Goodbye! Bobby signing out...
+____________________________________________________________
+```
+
+## Test Case: Save task changes
+
+Aim: Verify that adding, marking, and deleting tasks update data/bobby.txt.
+
+```input
+todo alpha
+deadline beta /by Friday
+event gamma /from 1pm /to 2pm
+mark 2
+delete 1
+bye
+```
+
+```expected
+____________________________________________________________
+ ____        _     _           
+| __ )  ___ | |__ | |__  _   _ 
+|  _ \ / _ \| '_ \| '_ \| | | |
+| |_) | (_) | |_) | |_) | |_| |
+|____/ \___/|_.__/|_.__/ \__, |
+                         |___/ 
+Hello! I'm Bobby.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] alpha
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] beta (by: Friday)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [E][ ] gamma (from: 1pm to: 2pm)
+Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+  [D][X] beta (by: Friday)
+____________________________________________________________
+____________________________________________________________
+Noted. I've removed this task:
+  [T][ ] alpha
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Goodbye! Bobby signing out...
+____________________________________________________________
+```
+
+```saved
+D | 1 | beta | Friday
+E | 0 | gamma | 1pm | 2pm
+```

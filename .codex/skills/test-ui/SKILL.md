@@ -15,6 +15,8 @@ Run repeatable console UI tests for the Java chatbot.
    - Aim: what behavior the case verifies.
    - Input: the exact console commands to send to the program.
    - Expected: the exact console output expected from the program.
+   - Data, if needed: initial contents of `data/bobby.txt` before the run.
+   - Saved, if needed: expected contents of `data/bobby.txt` after the run.
 4. Use the bundled runner from the repository root:
 
    ```bash
@@ -52,7 +54,19 @@ ____________________________________________________________
 ````
 
 Keep expected output exact. The runner normalizes line endings but does not ignore missing, extra, or reordered output lines.
+Use optional `data` and `saved` fenced blocks when testing persistence:
+
+````markdown
+```data
+T | 1 | read book
+```
+
+```saved
+T | 1 | read book
+D | 0 | return book | Sunday
+```
+````
 
 ## Resource
 
-`scripts/run-ui-tests.py` is a standard-library-only runner. It compiles all Java files in `src/main/java` into `/tmp/ip-ui-test-classes`, runs `Bobby`, compares stdout with expected output, and stops on the first failure.
+`scripts/run-ui-tests.py` is a standard-library-only runner. It compiles all Java files in `src/main/java` into `/tmp/ip-ui-test-classes`, runs `Bobby`, compares stdout with expected output, checks saved data when requested, restores any pre-existing `data/bobby.txt`, and stops on the first failure.

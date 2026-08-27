@@ -20,7 +20,7 @@ public class Bobby {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = loadTasks();
         String banner = " ____        _     _           \n"
                 + "| __ )  ___ | |__ | |__  _   _ \n"
                 + "|  _ \\ / _ \\| '_ \\| '_ \\| | | |\n"
@@ -50,6 +50,15 @@ public class Bobby {
             }
 
             System.out.println(LINE);
+        }
+    }
+
+    private static ArrayList<Task> loadTasks() {
+        try {
+            return Storage.loadTasks();
+        } catch (BobbyException e) {
+            System.out.println("Bobby needs a clearer save file: " + e.getMessage());
+            return new ArrayList<>();
         }
     }
 
@@ -96,12 +105,14 @@ public class Bobby {
             task.markAsNotDone();
             System.out.println("OK, I've marked this task as not done yet:");
         }
+        Storage.saveTasks(tasks);
         System.out.println("  " + task);
     }
 
     private static void deleteTask(String command, ArrayList<Task> tasks) throws BobbyException {
         int taskIndex = getTaskIndex(command, DELETE_COMMAND, tasks.size());
         Task removedTask = tasks.remove(taskIndex);
+        Storage.saveTasks(tasks);
         System.out.println("Noted. I've removed this task:");
         System.out.println("  " + removedTask);
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
@@ -152,8 +163,9 @@ public class Bobby {
         return description;
     }
 
-    private static void addTask(Task task, ArrayList<Task> tasks) {
+    private static void addTask(Task task, ArrayList<Task> tasks) throws BobbyException {
         tasks.add(task);
+        Storage.saveTasks(tasks);
         printTaskAdded(task, tasks.size());
     }
 

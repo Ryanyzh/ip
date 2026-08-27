@@ -24,4 +24,14 @@ public class Deadline extends Task {
     public String toString() {
         return super.toString() + " (by: " + by + ")";
     }
+
+    /**
+     * Returns a line that can be saved in the data file.
+     *
+     * @return serialized deadline data
+     */
+    @Override
+    public String toStorageString() {
+        return super.toStorageString() + " | " + by;
+    }
 }
