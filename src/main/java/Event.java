@@ -27,4 +27,14 @@ public class Event extends Task {
     public String toString() {
         return super.toString() + " (from: " + from + " to: " + to + ")";
     }
+
+    /**
+     * Returns a line that can be saved in the data file.
+     *
+     * @return serialized event data
+     */
+    @Override
+    public String toStorageString() {
+        return super.toStorageString() + " | " + from + " | " + to;
+    }
 }
