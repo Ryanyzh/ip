@@ -90,13 +90,13 @@ public class Storage {
         if (parts.length != 4) {
             throw new BobbyException("The saved task file contains an invalid deadline.");
         }
-        return new Deadline(parts[2], parts[3]);
+        return new Deadline(parts[2], DateTimeParser.parse(parts[3]));
     }
 
     private static Event createEvent(String[] parts) throws BobbyException {
         if (parts.length != 5) {
             throw new BobbyException("The saved task file contains an invalid event.");
         }
-        return new Event(parts[2], parts[3], parts[4]);
+        return new Event(parts[2], DateTimeParser.parse(parts[3]), DateTimeParser.parse(parts[4]));
     }
 }

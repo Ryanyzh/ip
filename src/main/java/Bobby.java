@@ -131,7 +131,7 @@ public class Bobby {
         if (by.isEmpty()) {
             throw new BobbyException("The /by part of a deadline cannot be empty.");
         }
-        addTask(new Deadline(description, by), tasks);
+        addTask(new Deadline(description, DateTimeParser.parse(by)), tasks);
     }
 
     private static void addEvent(String command, ArrayList<Task> tasks) throws BobbyException {
@@ -152,7 +152,7 @@ public class Bobby {
         if (to.isEmpty()) {
             throw new BobbyException("The /to part of an event cannot be empty.");
         }
-        addTask(new Event(description, from, to), tasks);
+        addTask(new Event(description, DateTimeParser.parse(from), DateTimeParser.parse(to)), tasks);
     }
 
     private static String getDescription(String command, String commandWord, String taskType) throws BobbyException {
