@@ -19,7 +19,12 @@ public class Bobby {
     /**
      * Starts Bobby, loads saved tasks, and handles user commands until the user exits.
      *
-     * @param args command-line arguments, currently unused
+     * @param args command-line arguments, currently unused.
+     */
+    /**
+     * Starts Bobby, loads saved tasks, and handles user commands until the user exits.
+     *
+     * @param args command-line arguments, currently unused.
      */
     public static void main(String[] args) {
         Ui ui = new Ui();
@@ -49,8 +54,8 @@ public class Bobby {
     /**
      * Loads tasks from storage and falls back to an empty task list if loading fails.
      *
-     * @param ui UI used to show any loading error
-     * @return loaded task list, or an empty list if loading fails
+     * @param ui UI used to show any loading error.
+     * @return loaded task list, or an empty list if loading fails.
      */
     private static TaskList loadTasks(Ui ui) {
         try {
@@ -64,10 +69,10 @@ public class Bobby {
     /**
      * Handles one non-exit command by updating tasks, saving changes, and showing feedback.
      *
-     * @param command command entered by the user
-     * @param tasks current task list
-     * @param ui UI used to show command results
-     * @throws BobbyException if the command is invalid
+     * @param command command entered by the user.
+     * @param tasks current task list.
+     * @param ui UI used to show command results.
+     * @throws BobbyException if the command is invalid.
      */
     private static void handleCommand(String command, TaskList tasks, Ui ui) throws BobbyException {
         if (command.equals(LIST_COMMAND)) {

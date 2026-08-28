@@ -11,7 +11,7 @@ public class TaskList {
     /**
      * Creates a task list backed by the given tasks.
      *
-     * @param tasks tasks loaded from storage
+     * @param tasks tasks loaded from storage.
      */
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
@@ -20,7 +20,7 @@ public class TaskList {
     /**
      * Adds a task to the list.
      *
-     * @param task task to add
+     * @param task task to add.
      */
     public void add(Task task) {
         tasks.add(task);
@@ -29,8 +29,8 @@ public class TaskList {
     /**
      * Deletes a task by zero-based index.
      *
-     * @param taskIndex index of task to delete
-     * @return deleted task
+     * @param taskIndex index of task to delete.
+     * @return deleted task.
      */
     public Task delete(int taskIndex) {
         return tasks.remove(taskIndex);
@@ -39,8 +39,8 @@ public class TaskList {
     /**
      * Marks a task as done by zero-based index.
      *
-     * @param taskIndex index of task to mark
-     * @return marked task
+     * @param taskIndex index of task to mark.
+     * @return marked task.
      */
     public Task mark(int taskIndex) {
         Task task = tasks.get(taskIndex);
@@ -51,8 +51,8 @@ public class TaskList {
     /**
      * Marks a task as not done by zero-based index.
      *
-     * @param taskIndex index of task to unmark
-     * @return unmarked task
+     * @param taskIndex index of task to unmark.
+     * @return unmarked task.
      */
     public Task unmark(int taskIndex) {
         Task task = tasks.get(taskIndex);
@@ -63,8 +63,8 @@ public class TaskList {
     /**
      * Returns whether the given zero-based task index exists.
      *
-     * @param taskIndex index to check
-     * @return true if the index points to an existing task
+     * @param taskIndex index to check.
+     * @return true if the index points to an existing task.
      */
     public boolean isValidIndex(int taskIndex) {
         return taskIndex >= 0 && taskIndex < tasks.size();
@@ -73,7 +73,7 @@ public class TaskList {
     /**
      * Returns the current number of tasks.
      *
-     * @return task count
+     * @return task count.
      */
     public int size() {
         return tasks.size();
@@ -82,7 +82,7 @@ public class TaskList {
     /**
      * Returns the backing list for display and storage.
      *
-     * @return current tasks
+     * @return current tasks.
      */
     public ArrayList<Task> asList() {
         return tasks;

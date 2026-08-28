@@ -11,8 +11,8 @@ public class Task {
     /**
      * Creates a task that starts out as not done.
      *
-     * @param description text entered by the user to describe the task
-     * @param type category of the task
+     * @param description text entered by the user to describe the task.
+     * @param type category of the task.
      */
     public Task(String description, TaskType type) {
         this.description = description;
@@ -23,7 +23,7 @@ public class Task {
     /**
      * Returns a line that can be saved in the data file.
      *
-     * @return serialized task data
+     * @return serialized task data.
      */
     public String toStorageString() {
         return type.getSymbol() + " | " + getStorageStatus() + " | " + description;
@@ -32,7 +32,7 @@ public class Task {
     /**
      * Returns the task description entered by the user.
      *
-     * @return task description
+     * @return task description.
      */
     protected String getDescription() {
         return description;
@@ -55,7 +55,7 @@ public class Task {
     /**
      * Returns this task in the display format expected by the chatbot.
      *
-     * @return task status and description
+     * @return task status and description.
      */
     @Override
     public String toString() {

@@ -1,8 +1,8 @@
 package bobby.task;
 
-import bobby.util.DateTimeParser;
-
 import java.time.LocalDateTime;
+
+import bobby.util.DateTimeParser;
 
 /**
  * Represents a task that should be completed by a specific date or time.
@@ -13,8 +13,8 @@ public class Deadline extends Task {
     /**
      * Creates a deadline task.
      *
-     * @param description text that describes the task
-     * @param by deadline date/time
+     * @param description text that describes the task.
+     * @param by deadline date/time.
      */
     public Deadline(String description, LocalDateTime by) {
         super(description, TaskType.DEADLINE);
@@ -24,7 +24,7 @@ public class Deadline extends Task {
     /**
      * Returns this deadline in the chatbot's list display format.
      *
-     * @return deadline type, status, description, and deadline
+     * @return deadline type, status, description, and deadline.
      */
     @Override
     public String toString() {
@@ -34,7 +34,7 @@ public class Deadline extends Task {
     /**
      * Returns a line that can be saved in the data file.
      *
-     * @return serialized deadline data
+     * @return serialized deadline data.
      */
     @Override
     public String toStorageString() {

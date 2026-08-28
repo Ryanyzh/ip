@@ -1,8 +1,8 @@
 package bobby.task;
 
-import bobby.util.DateTimeParser;
-
 import java.time.LocalDateTime;
+
+import bobby.util.DateTimeParser;
 
 /**
  * Represents a task that happens from one date or time to another.
@@ -14,9 +14,9 @@ public class Event extends Task {
     /**
      * Creates an event task.
      *
-     * @param description text that describes the event
-     * @param from start date/time
-     * @param to end date/time
+     * @param description text that describes the event.
+     * @param from start date/time.
+     * @param to end date/time.
      */
     public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description, TaskType.EVENT);
@@ -27,7 +27,7 @@ public class Event extends Task {
     /**
      * Returns this event in the chatbot's list display format.
      *
-     * @return event type, status, description, start, and end
+     * @return event type, status, description, start, and end.
      */
     @Override
     public String toString() {
@@ -38,7 +38,7 @@ public class Event extends Task {
     /**
      * Returns a line that can be saved in the data file.
      *
-     * @return serialized event data
+     * @return serialized event data.
      */
     @Override
     public String toStorageString() {

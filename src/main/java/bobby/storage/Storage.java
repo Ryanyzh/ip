@@ -1,17 +1,17 @@
 package bobby.storage;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+
 import bobby.BobbyException;
 import bobby.task.Deadline;
 import bobby.task.Event;
 import bobby.task.Task;
 import bobby.task.Todo;
 import bobby.util.DateTimeParser;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Handles loading and saving Bobby's tasks on the hard disk.
@@ -23,8 +23,8 @@ public class Storage {
     /**
      * Loads saved tasks from the data file.
      *
-     * @return tasks saved from an earlier run, or an empty list if no data file exists
-     * @throws BobbyException if the data file exists but cannot be read or parsed
+     * @return tasks saved from an earlier run, or an empty list if no data file exists.
+     * @throws BobbyException if the data file exists but cannot be read or parsed.
      */
     public static ArrayList<Task> loadTasks() throws BobbyException {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -48,8 +48,8 @@ public class Storage {
     /**
      * Saves all current tasks to the data file, creating the data folder if needed.
      *
-     * @param tasks current task list
-     * @throws BobbyException if the tasks cannot be saved
+     * @param tasks current task list.
+     * @throws BobbyException if the tasks cannot be saved.
      */
     public static void saveTasks(ArrayList<Task> tasks) throws BobbyException {
         try {
@@ -67,9 +67,9 @@ public class Storage {
     /**
      * Parses one line from the save file into a task and restores its done status.
      *
-     * @param line one serialized task line
-     * @return task represented by the line
-     * @throws BobbyException if the line has an invalid structure, type, or status
+     * @param line one serialized task line.
+     * @return task represented by the line.
+     * @throws BobbyException if the line has an invalid structure, type, or status.
      */
     private static Task parseTask(String line) throws BobbyException {
         String[] parts = line.split(SEPARATOR, -1);
@@ -89,9 +89,9 @@ public class Storage {
     /**
      * Creates the correct task subtype from split save-file fields.
      *
-     * @param parts split task fields
-     * @return task represented by the fields
-     * @throws BobbyException if the task type is unknown or its fields are invalid
+     * @param parts split task fields.
+     * @return task represented by the fields.
+     * @throws BobbyException if the task type is unknown or its fields are invalid.
      */
     private static Task createTask(String[] parts) throws BobbyException {
         return switch (parts[0]) {
@@ -105,9 +105,9 @@ public class Storage {
     /**
      * Creates a todo from split save-file fields.
      *
-     * @param parts split todo fields
-     * @return todo represented by the fields
-     * @throws BobbyException if the todo field count is invalid
+     * @param parts split todo fields.
+     * @return todo represented by the fields.
+     * @throws BobbyException if the todo field count is invalid.
      */
     private static Todo createTodo(String[] parts) throws BobbyException {
         if (parts.length != 3) {
@@ -119,9 +119,9 @@ public class Storage {
     /**
      * Creates a deadline from split save-file fields.
      *
-     * @param parts split deadline fields
-     * @return deadline represented by the fields
-     * @throws BobbyException if the deadline field count or date is invalid
+     * @param parts split deadline fields.
+     * @return deadline represented by the fields.
+     * @throws BobbyException if the deadline field count or date is invalid.
      */
     private static Deadline createDeadline(String[] parts) throws BobbyException {
         if (parts.length != 4) {
@@ -133,9 +133,9 @@ public class Storage {
     /**
      * Creates an event from split save-file fields.
      *
-     * @param parts split event fields
-     * @return event represented by the fields
-     * @throws BobbyException if the event field count or date fields are invalid
+     * @param parts split event fields.
+     * @return event represented by the fields.
+     * @throws BobbyException if the event field count or date fields are invalid.
      */
     private static Event createEvent(String[] parts) throws BobbyException {
         if (parts.length != 5) {
