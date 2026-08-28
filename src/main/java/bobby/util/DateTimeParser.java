@@ -54,6 +54,12 @@ public class DateTimeParser {
         return dateTime.format(DISPLAY_DATE_TIME).replace("AM", "am").replace("PM", "pm");
     }
 
+    /**
+     * Tries each supported date-time pattern that includes both date and time components.
+     *
+     * @param input trimmed date-time text
+     * @return parsed date-time, or null if none of the supported patterns match
+     */
     private static LocalDateTime parseDateTime(String input) {
         DateTimeFormatter[] formatters = {ISO_DATE_TIME, DASH_DATE_TIME, SLASH_DATE_TIME};
         for (DateTimeFormatter formatter : formatters) {

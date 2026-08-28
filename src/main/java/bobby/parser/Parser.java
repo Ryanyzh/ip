@@ -107,6 +107,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a deadline command after confirming that it starts with the deadline command word.
+     *
+     * @param command full deadline command
+     * @return deadline task represented by the command
+     * @throws BobbyException if the description or /by field is missing or invalid
+     */
     private static Deadline parseDeadline(String command) throws BobbyException {
         int byIndex = command.indexOf(BY_SEPARATOR);
         if (byIndex == -1) {
@@ -123,6 +130,13 @@ public class Parser {
         return new Deadline(description, DateTimeParser.parse(by));
     }
 
+    /**
+     * Parses an event command after confirming that it starts with the event command word.
+     *
+     * @param command full event command
+     * @return event task represented by the command
+     * @throws BobbyException if the description, /from field, or /to field is missing or invalid
+     */
     private static Event parseEvent(String command) throws BobbyException {
         int fromIndex = command.indexOf(FROM_SEPARATOR);
         int toIndex = command.indexOf(TO_SEPARATOR);
@@ -144,6 +158,15 @@ public class Parser {
         return new Event(description, DateTimeParser.parse(from), DateTimeParser.parse(to));
     }
 
+    /**
+     * Extracts and validates the description after a task command word.
+     *
+     * @param command full task command
+     * @param commandWord command word before the description
+     * @param taskType task type name used in the error message
+     * @return non-empty task description
+     * @throws BobbyException if the description is empty
+     */
     private static String getDescription(String command, String commandWord, String taskType) throws BobbyException {
         String description = command.substring(commandWord.length()).trim();
         if (description.isEmpty()) {

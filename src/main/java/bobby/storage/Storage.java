@@ -64,6 +64,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Parses one line from the save file into a task and restores its done status.
+     *
+     * @param line one serialized task line
+     * @return task represented by the line
+     * @throws BobbyException if the line has an invalid structure, type, or status
+     */
     private static Task parseTask(String line) throws BobbyException {
         String[] parts = line.split(SEPARATOR, -1);
         if (parts.length < 3) {
@@ -79,6 +86,13 @@ public class Storage {
         return task;
     }
 
+    /**
+     * Creates the correct task subtype from split save-file fields.
+     *
+     * @param parts split task fields
+     * @return task represented by the fields
+     * @throws BobbyException if the task type is unknown or its fields are invalid
+     */
     private static Task createTask(String[] parts) throws BobbyException {
         return switch (parts[0]) {
         case "T" -> createTodo(parts);
@@ -88,6 +102,13 @@ public class Storage {
         };
     }
 
+    /**
+     * Creates a todo from split save-file fields.
+     *
+     * @param parts split todo fields
+     * @return todo represented by the fields
+     * @throws BobbyException if the todo field count is invalid
+     */
     private static Todo createTodo(String[] parts) throws BobbyException {
         if (parts.length != 3) {
             throw new BobbyException("The saved task file contains an invalid todo.");
@@ -95,6 +116,13 @@ public class Storage {
         return new Todo(parts[2]);
     }
 
+    /**
+     * Creates a deadline from split save-file fields.
+     *
+     * @param parts split deadline fields
+     * @return deadline represented by the fields
+     * @throws BobbyException if the deadline field count or date is invalid
+     */
     private static Deadline createDeadline(String[] parts) throws BobbyException {
         if (parts.length != 4) {
             throw new BobbyException("The saved task file contains an invalid deadline.");
@@ -102,6 +130,13 @@ public class Storage {
         return new Deadline(parts[2], DateTimeParser.parse(parts[3]));
     }
 
+    /**
+     * Creates an event from split save-file fields.
+     *
+     * @param parts split event fields
+     * @return event represented by the fields
+     * @throws BobbyException if the event field count or date fields are invalid
+     */
     private static Event createEvent(String[] parts) throws BobbyException {
         if (parts.length != 5) {
             throw new BobbyException("The saved task file contains an invalid event.");
