@@ -1,9 +1,9 @@
 package bobby.ui;
 
-import bobby.task.Task;
-
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import bobby.task.Task;
 
 /**
  * Handles console interactions with the user.
@@ -40,7 +40,7 @@ public class Ui {
     /**
      * Returns whether another line of user input is available.
      *
-     * @return true if there is another input line
+     * @return true if there is another input line.
      */
     public boolean hasNextCommand() {
         return scanner.hasNextLine();
@@ -49,7 +49,7 @@ public class Ui {
     /**
      * Reads and trims the next command from the user.
      *
-     * @return trimmed command text
+     * @return trimmed command text.
      */
     public String readCommand() {
         return scanner.nextLine().trim();
@@ -65,7 +65,7 @@ public class Ui {
     /**
      * Prints an error from a user command.
      *
-     * @param message error details
+     * @param message error details.
      */
     public void showCommandError(String message) {
         System.out.println("Bobby needs a clearer command: " + message);
@@ -74,7 +74,7 @@ public class Ui {
     /**
      * Prints an error from loading the save file.
      *
-     * @param message error details
+     * @param message error details.
      */
     public void showLoadingError(String message) {
         System.out.println("Bobby needs a clearer save file: " + message);
@@ -83,7 +83,7 @@ public class Ui {
     /**
      * Prints all tasks in the list.
      *
-     * @param tasks tasks to display
+     * @param tasks tasks to display.
      */
     public void showTaskList(ArrayList<Task> tasks) {
         System.out.println("Here are the tasks in your list:");
@@ -95,8 +95,8 @@ public class Ui {
     /**
      * Prints the message shown after a task is added.
      *
-     * @param task added task
-     * @param taskCount current number of tasks
+     * @param task added task.
+     * @param taskCount current number of tasks.
      */
     public void showTaskAdded(Task task, int taskCount) {
         System.out.println("Got it. I've added this task:");
@@ -107,8 +107,8 @@ public class Ui {
     /**
      * Prints the message shown after a task is deleted.
      *
-     * @param task deleted task
-     * @param taskCount current number of tasks
+     * @param task deleted task.
+     * @param taskCount current number of tasks.
      */
     public void showTaskDeleted(Task task, int taskCount) {
         System.out.println("Noted. I've removed this task:");
@@ -119,7 +119,7 @@ public class Ui {
     /**
      * Prints the message shown after a task is marked as done.
      *
-     * @param task marked task
+     * @param task marked task.
      */
     public void showTaskMarked(Task task) {
         System.out.println("Nice! I've marked this task as done:");
@@ -129,7 +129,7 @@ public class Ui {
     /**
      * Prints the message shown after a task is marked as not done.
      *
-     * @param task unmarked task
+     * @param task unmarked task.
      */
     public void showTaskUnmarked(Task task) {
         System.out.println("OK, I've marked this task as not done yet:");
