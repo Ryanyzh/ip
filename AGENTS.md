@@ -39,6 +39,10 @@ After each code update, review `test/ui-test-plan.md` and update it if the behav
 
 ## Git
 
+For all future commit-message proposals and Git history changes in this
+repository, use the project-specific `seedu-git-standard` skill and follow the
+SE-EDU Git conventions.
+
 Use lightweight tags unless the user requests an annotated tag.
 When proposing or creating a commit message, include enough detail to explain the rationale for the change.
 Use conventional commit messages without level prefixes; record level information using Git tags such as `Level-7` instead.
