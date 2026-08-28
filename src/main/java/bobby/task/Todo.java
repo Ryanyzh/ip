@@ -1,3 +1,5 @@
+package bobby.task;
+
 /**
  * Represents a task without any date or time attached.
  */

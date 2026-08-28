@@ -1,3 +1,5 @@
+package bobby.task;
+
 /**
  * Represents one task in Bobby's in-memory task list.
  */

@@ -69,4 +69,4 @@ D | 0 | return book | Sunday
 
 ## Resource
 
-`scripts/run-ui-tests.py` is a standard-library-only runner. It compiles all Java files in `src/main/java` into `/tmp/ip-ui-test-classes`, runs `Bobby`, compares stdout with expected output, checks saved data when requested, restores any pre-existing `data/bobby.txt`, and stops on the first failure.
+`scripts/run-ui-tests.py` is a standard-library-only runner. It compiles all Java files in `src/main/java` into `/tmp/ip-ui-test-classes`, runs `bobby.Bobby`, compares stdout with expected output, checks saved data when requested, restores any pre-existing `data/bobby.txt`, and stops on the first failure.
