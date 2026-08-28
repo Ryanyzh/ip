@@ -15,6 +15,7 @@ public class Bobby {
     private static final String MARK_COMMAND = "mark";
     private static final String UNMARK_COMMAND = "unmark";
     private static final String DELETE_COMMAND = "delete";
+    private static final String FIND_COMMAND = "find";
 
     /**
      * Starts Bobby, loads saved tasks, and handles user commands until the user exits.
@@ -77,6 +78,9 @@ public class Bobby {
     private static void handleCommand(String command, TaskList tasks, Ui ui) throws BobbyException {
         if (command.equals(LIST_COMMAND)) {
             ui.showTaskList(tasks.asList());
+        } else if (Parser.isFind(command)) {
+            String keyword = Parser.parseFindKeyword(command);
+            ui.showMatchingTasks(tasks.find(keyword));
         } else if (Parser.isMark(command)) {
             int taskIndex = Parser.parseTaskIndex(command, MARK_COMMAND, tasks);
             Task task = tasks.mark(taskIndex);

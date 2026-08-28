@@ -103,6 +103,72 @@ Goodbye! Bobby signing out...
 ____________________________________________________________
 ```
 
+## Test Case: Find tasks by keyword
+
+Aim: Verify that find lists matching task descriptions, handles no matches, and rejects a missing keyword.
+
+```input
+todo read book
+deadline return book /by 2019-12-08
+todo buy milk
+mark 1
+mark 2
+find book
+find chocolate
+find
+bye
+```
+
+```expected
+____________________________________________________________
+ ____        _     _           
+| __ )  ___ | |__ | |__  _   _ 
+|  _ \ / _ \| '_ \| '_ \| | | |
+| |_) | (_) | |_) | |_) | |_| |
+|____/ \___/|_.__/|_.__/ \__, |
+                         |___/ 
+Hello! I'm Bobby.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] read book
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] return book (by: Dec 8 2019)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] buy milk
+Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+  [T][X] read book
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+  [D][X] return book (by: Dec 8 2019)
+____________________________________________________________
+____________________________________________________________
+Here are the matching tasks in your list:
+1.[T][X] read book
+2.[D][X] return book (by: Dec 8 2019)
+____________________________________________________________
+____________________________________________________________
+Here are the matching tasks in your list:
+____________________________________________________________
+____________________________________________________________
+Bobby needs a clearer command: Please provide a keyword after find.
+____________________________________________________________
+____________________________________________________________
+Goodbye! Bobby signing out...
+____________________________________________________________
+```
+
 ## Test Case: Invalid fields do not affect status updates
 
 Aim: Verify that empty date fields and invalid unmark numbers do not change existing task statuses.

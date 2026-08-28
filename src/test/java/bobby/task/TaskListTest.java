@@ -25,6 +25,31 @@ class TaskListTest {
     }
 
     @Test
+    void find_keywordMatchesDescriptions_returnsMatchingTasksInOrder() {
+        TaskList taskList = new TaskList(new ArrayList<>());
+        Todo firstTask = new Todo("read book");
+        Todo secondTask = new Todo("buy milk");
+        Todo thirdTask = new Todo("return Book");
+        taskList.add(firstTask);
+        taskList.add(secondTask);
+        taskList.add(thirdTask);
+
+        ArrayList<Task> matchingTasks = taskList.find("book");
+
+        assertEquals(2, matchingTasks.size());
+        assertSame(firstTask, matchingTasks.get(0));
+        assertSame(thirdTask, matchingTasks.get(1));
+    }
+
+    @Test
+    void find_keywordDoesNotMatchAnyDescription_returnsEmptyList() {
+        TaskList taskList = new TaskList(new ArrayList<>());
+        taskList.add(new Todo("read book"));
+
+        assertTrue(taskList.find("milk").isEmpty());
+    }
+
+    @Test
     void markAndUnmark_updatesSelectedTaskOnly() {
         TaskList taskList = new TaskList(new ArrayList<>());
         Todo firstTask = new Todo("first");

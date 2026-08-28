@@ -33,6 +33,24 @@ class ParserTest {
     }
 
     @Test
+    void isFind_findCommand_returnsTrue() {
+        assertTrue(Parser.isFind("find"));
+        assertTrue(Parser.isFind("find book"));
+    }
+
+    @Test
+    void parseFindKeyword_validKeyword_returnsTrimmedKeyword() throws BobbyException {
+        assertEquals("book", Parser.parseFindKeyword("find book"));
+        assertEquals("library book", Parser.parseFindKeyword("find   library book  "));
+    }
+
+    @Test
+    void parseFindKeyword_missingKeyword_throwsBobbyException() {
+        assertThrows(BobbyException.class, () -> Parser.parseFindKeyword("find"));
+        assertThrows(BobbyException.class, () -> Parser.parseFindKeyword("find   "));
+    }
+
+    @Test
     void parseTask_validTaskCommands_returnsCorrectTaskTypesAndDisplayText() throws BobbyException {
         assertInstanceOf(Todo.class, Parser.parseTask("todo borrow book"));
 
