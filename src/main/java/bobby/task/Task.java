@@ -1,5 +1,7 @@
 package bobby.task;
 
+import java.util.Locale;
+
 /**
  * Represents one task in Bobby's in-memory task list.
  */
@@ -36,6 +38,16 @@ public class Task {
      */
     protected String getDescription() {
         return description;
+    }
+
+    /**
+     * Returns whether this task's description contains the given keyword.
+     *
+     * @param keyword text to search for
+     * @return true if the description contains the keyword
+     */
+    public boolean containsKeyword(String keyword) {
+        return description.toLowerCase(Locale.ROOT).contains(keyword.toLowerCase(Locale.ROOT));
     }
 
     /**

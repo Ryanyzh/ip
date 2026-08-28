@@ -15,6 +15,7 @@ public class Parser {
     private static final String MARK_COMMAND = "mark";
     private static final String UNMARK_COMMAND = "unmark";
     private static final String DELETE_COMMAND = "delete";
+    private static final String FIND_COMMAND = "find";
     private static final String TODO_COMMAND = "todo";
     private static final String DEADLINE_COMMAND = "deadline";
     private static final String EVENT_COMMAND = "event";
@@ -61,6 +62,31 @@ public class Parser {
      */
     public static boolean isDelete(String command) {
         return isCommand(command, DELETE_COMMAND);
+    }
+
+    /**
+     * Returns whether the input is a find command.
+     *
+     * @param command user input
+     * @return true if this is a find command
+     */
+    public static boolean isFind(String command) {
+        return isCommand(command, FIND_COMMAND);
+    }
+
+    /**
+     * Parses the keyword from a find command.
+     *
+     * @param command full user command
+     * @return keyword to search for
+     * @throws BobbyException if the keyword is missing
+     */
+    public static String parseFindKeyword(String command) throws BobbyException {
+        String keyword = command.substring(FIND_COMMAND.length()).trim();
+        if (keyword.isEmpty()) {
+            throw new BobbyException("Please provide a keyword after find.");
+        }
+        return keyword;
     }
 
     /**
