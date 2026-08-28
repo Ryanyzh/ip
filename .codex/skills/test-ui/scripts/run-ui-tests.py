@@ -76,7 +76,7 @@ def normalize_optional_block(text: str | None) -> str | None:
 
 def compile_project(repo: Path, classes_dir: Path) -> None:
     classes_dir.mkdir(parents=True, exist_ok=True)
-    java_files = sorted((repo / "src/main/java").glob("*.java"))
+    java_files = sorted((repo / "src/main/java").rglob("*.java"))
     if not java_files:
         raise ValueError("No Java files found in src/main/java")
 
@@ -94,7 +94,7 @@ def run_case(repo: Path, classes_dir: Path, test_case: UiTestCase) -> str:
         console_input += "\n"
 
     result = subprocess.run(
-        ["java", "-cp", str(classes_dir), "Bobby"],
+        ["java", "-cp", str(classes_dir), "bobby.Bobby"],
         cwd=repo,
         input=console_input,
         capture_output=True,

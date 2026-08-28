@@ -1,3 +1,11 @@
+package bobby;
+
+import bobby.parser.Parser;
+import bobby.storage.Storage;
+import bobby.task.Task;
+import bobby.task.TaskList;
+import bobby.ui.Ui;
+
 /**
  * Entry point for the Bobby chatbot application.
  */

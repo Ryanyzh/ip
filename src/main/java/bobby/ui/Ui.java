@@ -1,3 +1,7 @@
+package bobby.ui;
+
+import bobby.task.Task;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
