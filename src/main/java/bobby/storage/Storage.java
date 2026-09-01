@@ -95,10 +95,10 @@ public class Storage {
      */
     private static Task createTask(String[] parts) throws BobbyException {
         return switch (parts[0]) {
-        case "T" -> createTodo(parts);
-        case "D" -> createDeadline(parts);
-        case "E" -> createEvent(parts);
-        default -> throw new BobbyException("The saved task file contains an invalid task type.");
+            case "T" -> createTodo(parts);
+            case "D" -> createDeadline(parts);
+            case "E" -> createEvent(parts);
+            default -> throw new BobbyException("The saved task file contains an invalid task type.");
         };
     }
 

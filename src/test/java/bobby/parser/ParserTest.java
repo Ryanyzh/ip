@@ -70,8 +70,7 @@ class ParserTest {
         assertThrows(BobbyException.class, () -> Parser.parseTask("deadline return book"));
         assertThrows(BobbyException.class, () -> Parser.parseTask("deadline return book /by"));
         assertThrows(BobbyException.class, () -> Parser.parseTask("event meeting /from 2019-12-02 1400"));
-        assertThrows(BobbyException.class,
-                () -> Parser.parseTask("event meeting /from 2019-12-02 1400 /to"));
+        assertThrows(BobbyException.class, () -> Parser.parseTask("event meeting /from 2019-12-02 1400 /to"));
         assertThrows(BobbyException.class, () -> Parser.parseTask("blah"));
     }
 
