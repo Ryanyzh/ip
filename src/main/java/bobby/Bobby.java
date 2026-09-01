@@ -22,11 +22,6 @@ public class Bobby {
      *
      * @param args command-line arguments, currently unused.
      */
-    /**
-     * Starts Bobby, loads saved tasks, and handles user commands until the user exits.
-     *
-     * @param args command-line arguments, currently unused.
-     */
     public static void main(String[] args) {
         Ui ui = new Ui();
         TaskList tasks = loadTasks(ui);
