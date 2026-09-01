@@ -1,0 +1,48 @@
+.root {
+    -fx-background-color: #f5f7fb;
+    -fx-font-family: "Arial";
+    -fx-font-size: 13px;
+}
+
+.scroll-pane {
+    -fx-background: #f5f7fb;
+    -fx-background-color: #f5f7fb;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: #f5f7fb;
+}
+
+.button {
+    -fx-background-color: #2f6feb;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.text-field {
+    -fx-background-color: white;
+}
+
+.dialog-container {
+    -fx-padding: 10px;
+}
+
+.user-dialog,
+.bobby-dialog {
+    -fx-padding: 8px;
+    -fx-spacing: 8px;
+}
+
+.label {
+    -fx-background-color: white;
+    -fx-background-radius: 6px;
+    -fx-border-color: #d8dee9;
+    -fx-border-radius: 6px;
+    -fx-padding: 8px;
+    -fx-max-width: 260px;
+}
+
+.user-dialog .label {
+    -fx-background-color: #dbe8ff;
+}
