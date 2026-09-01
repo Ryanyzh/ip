@@ -1,7 +1,12 @@
 package bobby.gui;
 
+import java.io.IOException;
+import java.util.Collections;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -13,26 +18,24 @@ import javafx.scene.layout.HBox;
  * Shows one chat message with an avatar.
  */
 public class DialogBox extends HBox {
-    private static final double AVATAR_SIZE = 80.0;
+    @FXML
+    private Label dialog;
 
-    private final Label text;
-    private final ImageView displayPicture;
+    @FXML
+    private ImageView displayPicture;
 
-    /**
-     * Creates a dialog box with the given text and display picture.
-     *
-     * @param text message to show.
-     * @param image avatar image to show next to the message.
-     */
-    public DialogBox(String text, Image image) {
-        this.text = new Label(text);
-        displayPicture = new ImageView(image);
+    private DialogBox(String text, Image image) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
+            fxmlLoader.setController(this);
+            fxmlLoader.setRoot(this);
+            fxmlLoader.load();
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to load DialogBox.fxml.", e);
+        }
 
-        this.text.setWrapText(true);
-        displayPicture.setFitWidth(AVATAR_SIZE);
-        displayPicture.setFitHeight(AVATAR_SIZE);
-        setAlignment(Pos.TOP_RIGHT);
-        getChildren().addAll(this.text, displayPicture);
+        dialog.setText(text);
+        displayPicture.setImage(image);
     }
 
     /**
@@ -65,7 +68,7 @@ public class DialogBox extends HBox {
     private void flip() {
         setAlignment(Pos.TOP_LEFT);
         ObservableList<Node> nodes = FXCollections.observableArrayList(getChildren());
-        FXCollections.reverse(nodes);
+        Collections.reverse(nodes);
         getChildren().setAll(nodes);
     }
 }
