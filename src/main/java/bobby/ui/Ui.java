@@ -32,8 +32,7 @@ public class Ui {
     public void showWelcome() {
         showLine();
         System.out.print(BANNER);
-        System.out.println("Hello! I'm Bobby.");
-        System.out.println("What can I do for you?");
+        printLines("Hello! I'm Bobby.", "What can I do for you?");
         showLine();
     }
 
@@ -111,9 +110,10 @@ public class Ui {
      * @param taskCount current number of tasks.
      */
     public void showTaskAdded(Task task, int taskCount) {
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + task);
-        System.out.println("Now you have " + taskCount + " tasks in the list.");
+        printLines(
+                "Got it. I've added this task:",
+                "  " + task,
+                "Now you have " + taskCount + " tasks in the list.");
     }
 
     /**
@@ -123,9 +123,10 @@ public class Ui {
      * @param taskCount current number of tasks.
      */
     public void showTaskDeleted(Task task, int taskCount) {
-        System.out.println("Noted. I've removed this task:");
-        System.out.println("  " + task);
-        System.out.println("Now you have " + taskCount + " tasks in the list.");
+        printLines(
+                "Noted. I've removed this task:",
+                "  " + task,
+                "Now you have " + taskCount + " tasks in the list.");
     }
 
     /**
@@ -134,8 +135,7 @@ public class Ui {
      * @param task marked task.
      */
     public void showTaskMarked(Task task) {
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println("  " + task);
+        printLines("Nice! I've marked this task as done:", "  " + task);
     }
 
     /**
@@ -144,8 +144,7 @@ public class Ui {
      * @param task unmarked task.
      */
     public void showTaskUnmarked(Task task) {
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println("  " + task);
+        printLines("OK, I've marked this task as not done yet:", "  " + task);
     }
 
     /**
@@ -153,5 +152,11 @@ public class Ui {
      */
     public void showLine() {
         System.out.println(LINE);
+    }
+
+    private void printLines(String... lines) {
+        for (String line : lines) {
+            System.out.println(line);
+        }
     }
 }
