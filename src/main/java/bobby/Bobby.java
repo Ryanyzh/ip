@@ -1,5 +1,7 @@
 package bobby;
 
+import java.util.ArrayList;
+
 import bobby.parser.Parser;
 import bobby.storage.Storage;
 import bobby.task.Task;
@@ -16,6 +18,25 @@ public class Bobby {
     private static final String UNMARK_COMMAND = "unmark";
     private static final String DELETE_COMMAND = "delete";
     private static final String FIND_COMMAND = "find";
+
+    private final TaskList tasks;
+    private final String loadingError;
+
+    /**
+     * Creates a Bobby chatbot instance for the JavaFX GUI.
+     */
+    public Bobby() {
+        TaskList loadedTasks;
+        String errorMessage = null;
+        try {
+            loadedTasks = new TaskList(Storage.loadTasks());
+        } catch (BobbyException e) {
+            loadedTasks = new TaskList(new ArrayList<>());
+            errorMessage = "Bobby needs a clearer save file: " + e.getMessage();
+        }
+        tasks = loadedTasks;
+        loadingError = errorMessage;
+    }
 
     /**
      * Starts Bobby, loads saved tasks, and handles user commands until the user exits.
@@ -58,7 +79,79 @@ public class Bobby {
             return new TaskList(Storage.loadTasks());
         } catch (BobbyException e) {
             ui.showLoadingError(e.getMessage());
-            return new TaskList(new java.util.ArrayList<>());
+            return new TaskList(new ArrayList<>());
+        }
+    }
+
+    /**
+     * Returns the greeting shown when Bobby starts in the GUI.
+     *
+     * @return welcome message, with a loading error first if the save file cannot be read.
+     */
+    public String getWelcomeMessage() {
+        String welcomeMessage = "Hello! I'm Bobby.\nWhat can I do for you?";
+        if (loadingError == null) {
+            return welcomeMessage;
+        }
+        return loadingError + "\n" + welcomeMessage;
+    }
+
+    /**
+     * Returns whether the command asks Bobby to exit.
+     *
+     * @param command user command.
+     * @return true if the command is bye.
+     */
+    public boolean isExitCommand(String command) {
+        return command.equals(BYE_COMMAND);
+    }
+
+    /**
+     * Handles one GUI command and returns Bobby's response.
+     *
+     * @param command command entered by the user.
+     * @return response to show in the GUI.
+     */
+    public String getResponse(String command) {
+        if (isExitCommand(command)) {
+            return "Goodbye! Bobby signing out...";
+        }
+
+        try {
+            return handleCommand(command, tasks);
+        } catch (BobbyException e) {
+            return "Bobby needs a clearer command: " + e.getMessage();
+        }
+    }
+
+    private static String handleCommand(String command, TaskList tasks) throws BobbyException {
+        if (command.equals(LIST_COMMAND)) {
+            return formatTaskList("Here are the tasks in your list:", tasks.asList());
+        } else if (Parser.isFind(command)) {
+            String keyword = Parser.parseFindKeyword(command);
+            return formatTaskList("Here are the matching tasks in your list:", tasks.find(keyword));
+        } else if (Parser.isMark(command)) {
+            int taskIndex = Parser.parseTaskIndex(command, MARK_COMMAND, tasks);
+            Task task = tasks.mark(taskIndex);
+            Storage.saveTasks(tasks.asList());
+            return "Nice! I've marked this task as done:\n  " + task;
+        } else if (Parser.isUnmark(command)) {
+            int taskIndex = Parser.parseTaskIndex(command, UNMARK_COMMAND, tasks);
+            Task task = tasks.unmark(taskIndex);
+            Storage.saveTasks(tasks.asList());
+            return "OK, I've marked this task as not done yet:\n  " + task;
+        } else if (Parser.isDelete(command)) {
+            int taskIndex = Parser.parseTaskIndex(command, DELETE_COMMAND, tasks);
+            Task removedTask = tasks.delete(taskIndex);
+            Storage.saveTasks(tasks.asList());
+            return "Noted. I've removed this task:\n  " + removedTask
+                    + "\nNow you have " + tasks.size() + " tasks in the list.";
+        } else {
+            Task task = Parser.parseTask(command);
+            tasks.add(task);
+            Storage.saveTasks(tasks.asList());
+            return "Got it. I've added this task:\n  " + task
+                    + "\nNow you have " + tasks.size() + " tasks in the list.";
         }
     }
 
@@ -97,5 +190,13 @@ public class Bobby {
             Storage.saveTasks(tasks.asList());
             ui.showTaskAdded(task, tasks.size());
         }
+    }
+
+    private static String formatTaskList(String heading, ArrayList<Task> tasks) {
+        StringBuilder response = new StringBuilder(heading);
+        for (int i = 0; i < tasks.size(); i++) {
+            response.append("\n").append(i + 1).append(".").append(tasks.get(i));
+        }
+        return response.toString();
     }
 }

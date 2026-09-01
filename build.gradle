@@ -42,7 +42,12 @@ test {
 }
 
 application {
-    mainClass = 'bobby.Bobby'
+    mainClass = 'bobby.Launcher'
+    applicationDefaultJvmArgs = ['--add-modules', 'javafx.controls']
+}
+
+compileJava {
+    options.compilerArgs += ['--add-modules', 'javafx.controls']
 }
 
 jar {
