@@ -93,18 +93,18 @@ public class Main extends Application {
     }
 
     private void handleUserInput() {
-        String input = userInput.getText().trim();
-        if (input.isEmpty()) {
+        String userText = userInput.getText().trim();
+        if (userText.isEmpty()) {
             return;
         }
 
-        String response = bobby.getResponse(input);
+        String bobbyText = bobby.getResponse(userText);
         dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getBobbyDialog(response, bobbyImage));
+                DialogBox.getUserDialog(userText, userImage),
+                DialogBox.getBobbyDialog(bobbyText, bobbyImage));
         userInput.clear();
 
-        if (bobby.isExitCommand(input)) {
+        if (bobby.isExitCommand(userText)) {
             Platform.exit();
         }
     }
