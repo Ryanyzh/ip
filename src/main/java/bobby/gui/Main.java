@@ -62,9 +62,9 @@ public class Main extends Application {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setFitToWidth(true);
-        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
 
         dialogContainer.setPrefHeight(Region.USE_COMPUTED_SIZE);
+        dialogContainer.heightProperty().addListener(observable -> scrollPane.setVvalue(1.0));
 
         userInput.setPrefWidth(325.0);
         sendButton.setPrefWidth(55.0);
