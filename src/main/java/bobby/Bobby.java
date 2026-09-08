@@ -59,7 +59,7 @@ public class Bobby {
             }
 
             try {
-                handleCommand(command, tasks, ui);
+                ui.showResponse(handleCommand(command, tasks));
             } catch (BobbyException e) {
                 ui.showCommandError(e.getMessage());
             }
@@ -152,43 +152,6 @@ public class Bobby {
             Storage.saveTasks(tasks.asList());
             return "Got it. I've added this task:\n  " + task
                     + "\nNow you have " + tasks.size() + " tasks in the list.";
-        }
-    }
-
-    /**
-     * Handles one non-exit command by updating tasks, saving changes, and showing feedback.
-     *
-     * @param command command entered by the user.
-     * @param tasks current task list.
-     * @param ui UI used to show command results.
-     * @throws BobbyException if the command is invalid.
-     */
-    private static void handleCommand(String command, TaskList tasks, Ui ui) throws BobbyException {
-        if (command.equals(LIST_COMMAND)) {
-            ui.showTaskList(tasks.asList());
-        } else if (Parser.isFind(command)) {
-            String keyword = Parser.parseFindKeyword(command);
-            ui.showMatchingTasks(tasks.find(keyword));
-        } else if (Parser.isMark(command)) {
-            int taskIndex = Parser.parseTaskIndex(command, MARK_COMMAND, tasks);
-            Task task = tasks.mark(taskIndex);
-            Storage.saveTasks(tasks.asList());
-            ui.showTaskMarked(task);
-        } else if (Parser.isUnmark(command)) {
-            int taskIndex = Parser.parseTaskIndex(command, UNMARK_COMMAND, tasks);
-            Task task = tasks.unmark(taskIndex);
-            Storage.saveTasks(tasks.asList());
-            ui.showTaskUnmarked(task);
-        } else if (Parser.isDelete(command)) {
-            int taskIndex = Parser.parseTaskIndex(command, DELETE_COMMAND, tasks);
-            Task removedTask = tasks.delete(taskIndex);
-            Storage.saveTasks(tasks.asList());
-            ui.showTaskDeleted(removedTask, tasks.size());
-        } else {
-            Task task = Parser.parseTask(command);
-            tasks.add(task);
-            Storage.saveTasks(tasks.asList());
-            ui.showTaskAdded(task, tasks.size());
         }
     }
 

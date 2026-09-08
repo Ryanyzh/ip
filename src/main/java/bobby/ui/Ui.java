@@ -1,9 +1,6 @@
 package bobby.ui;
 
-import java.util.ArrayList;
 import java.util.Scanner;
-
-import bobby.task.Task;
 
 /**
  * Handles console interactions with the user.
@@ -80,71 +77,12 @@ public class Ui {
     }
 
     /**
-     * Prints all tasks in the list.
+     * Prints a multi-line response from Bobby.
      *
-     * @param tasks tasks to display.
+     * @param response response text to print.
      */
-    public void showTaskList(ArrayList<Task> tasks) {
-        System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + "." + tasks.get(i));
-        }
-    }
-
-    /**
-     * Prints all tasks that match a find command.
-     *
-     * @param tasks matching tasks to display
-     */
-    public void showMatchingTasks(ArrayList<Task> tasks) {
-        System.out.println("Here are the matching tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + "." + tasks.get(i));
-        }
-    }
-
-    /**
-     * Prints the message shown after a task is added.
-     *
-     * @param task added task.
-     * @param taskCount current number of tasks.
-     */
-    public void showTaskAdded(Task task, int taskCount) {
-        printLines(
-                "Got it. I've added this task:",
-                "  " + task,
-                "Now you have " + taskCount + " tasks in the list.");
-    }
-
-    /**
-     * Prints the message shown after a task is deleted.
-     *
-     * @param task deleted task.
-     * @param taskCount current number of tasks.
-     */
-    public void showTaskDeleted(Task task, int taskCount) {
-        printLines(
-                "Noted. I've removed this task:",
-                "  " + task,
-                "Now you have " + taskCount + " tasks in the list.");
-    }
-
-    /**
-     * Prints the message shown after a task is marked as done.
-     *
-     * @param task marked task.
-     */
-    public void showTaskMarked(Task task) {
-        printLines("Nice! I've marked this task as done:", "  " + task);
-    }
-
-    /**
-     * Prints the message shown after a task is marked as not done.
-     *
-     * @param task unmarked task.
-     */
-    public void showTaskUnmarked(Task task) {
-        printLines("OK, I've marked this task as not done yet:", "  " + task);
+    public void showResponse(String response) {
+        printLines(response.split("\n", -1));
     }
 
     /**
