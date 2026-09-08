@@ -2,6 +2,7 @@ package bobby.task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Stores the task list and provides operations that change or inspect it.
@@ -35,14 +36,10 @@ public class TaskList {
      * @param keyword text to search for.
      * @return matching tasks in their current list order.
      */
-    public List<Task> find(String keyword) {
-        ArrayList<Task> matchingTasks = new ArrayList<>();
-        for (Task task : tasks) {
-            if (task.containsKeyword(keyword)) {
-                matchingTasks.add(task);
-            }
-        }
-        return matchingTasks;
+    public ArrayList<Task> find(String keyword) {
+        return tasks.stream()
+                .filter(task -> task.containsKeyword(keyword))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
