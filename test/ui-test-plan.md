@@ -169,6 +169,62 @@ Goodbye! Bobby signing out...
 ____________________________________________________________
 ```
 
+## Test Case: Tag and find tasks by tag
+
+Aim: Verify that tagging a task displays the tag, allows finding by tag, and rejects invalid tag text.
+
+```input
+todo read book
+todo buy milk
+tag 1 #reading
+tag 2 errand
+list
+find #reading
+bye
+```
+
+```expected
+____________________________________________________________
+ ____        _     _           
+| __ )  ___ | |__ | |__  _   _ 
+|  _ \ / _ \| '_ \| '_ \| | | |
+| |_) | (_) | |_) | |_) | |_| |
+|____/ \___/|_.__/|_.__/ \__, |
+                         |___/ 
+Hello! I'm Bobby.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] read book
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] buy milk
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Tagged this task:
+  [T][ ] read book #reading
+____________________________________________________________
+____________________________________________________________
+Bobby needs a clearer command: Tags should start with # and contain no spaces.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][ ] read book #reading
+2.[T][ ] buy milk
+____________________________________________________________
+____________________________________________________________
+Here are the matching tasks in your list:
+1.[T][ ] read book #reading
+____________________________________________________________
+____________________________________________________________
+Goodbye! Bobby signing out...
+____________________________________________________________
+```
+
 ## Test Case: Invalid fields do not affect status updates
 
 Aim: Verify that empty date fields and invalid unmark numbers do not change existing task statuses.
@@ -397,6 +453,7 @@ todo alpha
 deadline beta /by 2019-12-06
 event gamma /from 2019-12-02 1300 /to 2019-12-02 1400
 mark 2
+tag 2 #urgent
 delete 1
 bye
 ```
@@ -432,6 +489,10 @@ Nice! I've marked this task as done:
   [D][X] beta (by: Dec 6 2019)
 ____________________________________________________________
 ____________________________________________________________
+Tagged this task:
+  [D][X] beta (by: Dec 6 2019) #urgent
+____________________________________________________________
+____________________________________________________________
 Noted. I've removed this task:
   [T][ ] alpha
 Now you have 2 tasks in the list.
@@ -442,7 +503,7 @@ ____________________________________________________________
 ```
 
 ```saved
-D | 1 | beta | 2019-12-06T00:00
+D | 1 | beta | 2019-12-06T00:00 | #urgent
 E | 0 | gamma | 2019-12-02T13:00 | 2019-12-02T14:00
 ```
 

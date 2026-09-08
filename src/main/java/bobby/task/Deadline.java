@@ -29,7 +29,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return super.toString() + " (by: " + DateTimeParser.formatForDisplay(by) + ")";
+        return baseDisplayString() + " (by: " + DateTimeParser.formatForDisplay(by) + ")" + tagsDisplayString();
     }
 
     /**
@@ -39,6 +39,6 @@ public class Deadline extends Task {
      */
     @Override
     public String toStorageString() {
-        return super.toStorageString() + " | " + by;
+        return typeAndStatusStorageString() + " | " + getDescription() + " | " + by + tagsStorageString();
     }
 }

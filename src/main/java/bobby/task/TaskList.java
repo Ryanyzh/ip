@@ -54,6 +54,22 @@ public class TaskList {
     }
 
     /**
+     * Adds a tag to a task by zero-based index.
+     *
+     * @param taskIndex index of task to tag.
+     * @param tag tag to add.
+     * @return tagged task.
+     */
+    public Task addTag(int taskIndex, String tag) {
+        assert isValidIndex(taskIndex) : "Tag should receive a valid task index.";
+        assert Task.isValidTag(tag) : "Tag should be valid before adding.";
+
+        Task task = tasks.get(taskIndex);
+        task.addTag(tag);
+        return task;
+    }
+
+    /**
      * Marks a task as done by zero-based index.
      *
      * @param taskIndex index of task to mark.

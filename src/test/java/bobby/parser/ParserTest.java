@@ -39,6 +39,12 @@ class ParserTest {
     }
 
     @Test
+    void isTag_tagCommand_returnsTrue() {
+        assertTrue(Parser.isTag("tag"));
+        assertTrue(Parser.isTag("tag 1 #fun"));
+    }
+
+    @Test
     void parseFindKeyword_validKeyword_returnsTrimmedKeyword() throws BobbyException {
         assertEquals("book", Parser.parseFindKeyword("find book"));
         assertEquals("library book", Parser.parseFindKeyword("find   library book  "));
@@ -93,5 +99,29 @@ class ParserTest {
         assertThrows(BobbyException.class, () -> Parser.parseTaskIndex("mark two", "mark", taskList));
         assertThrows(BobbyException.class, () -> Parser.parseTaskIndex("mark 0", "mark", taskList));
         assertThrows(BobbyException.class, () -> Parser.parseTaskIndex("mark 2", "mark", taskList));
+    }
+
+    @Test
+    void parseTagCommand_validCommand_returnsTaskIndexAndTag() throws BobbyException {
+        TaskList taskList = new TaskList(new ArrayList<>());
+        taskList.add(new Todo("first"));
+
+        Parser.TagCommand tagCommand = Parser.parseTagCommand("tag 1 #fun", taskList);
+
+        assertEquals(0, tagCommand.taskIndex());
+        assertEquals("#fun", tagCommand.tag());
+    }
+
+    @Test
+    void parseTagCommand_missingInvalidOrOutOfRangeArguments_throwsBobbyException() {
+        TaskList taskList = new TaskList(new ArrayList<>());
+        taskList.add(new Todo("first"));
+
+        assertThrows(BobbyException.class, () -> Parser.parseTagCommand("tag", taskList));
+        assertThrows(BobbyException.class, () -> Parser.parseTagCommand("tag 1", taskList));
+        assertThrows(BobbyException.class, () -> Parser.parseTagCommand("tag two #fun", taskList));
+        assertThrows(BobbyException.class, () -> Parser.parseTagCommand("tag 2 #fun", taskList));
+        assertThrows(BobbyException.class, () -> Parser.parseTagCommand("tag 1 fun", taskList));
+        assertThrows(BobbyException.class, () -> Parser.parseTagCommand("tag 1 #", taskList));
     }
 }

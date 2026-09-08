@@ -1,5 +1,7 @@
 package bobby.task;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -8,6 +10,7 @@ import java.util.Locale;
 public class Task {
     private final String description;
     private final TaskType type;
+    private final List<String> tags;
     private boolean isDone;
 
     /**
@@ -22,6 +25,7 @@ public class Task {
 
         this.description = description;
         this.type = type;
+        this.tags = new ArrayList<>();
         this.isDone = false;
     }
 
@@ -31,7 +35,7 @@ public class Task {
      * @return serialized task data.
      */
     public String toStorageString() {
-        return type.getSymbol() + " | " + getStorageStatus() + " | " + description;
+        return typeAndStatusStorageString() + " | " + description + tagsStorageString();
     }
 
     /**
@@ -44,13 +48,57 @@ public class Task {
     }
 
     /**
-     * Returns whether this task's description contains the given keyword.
+     * Returns the serialized task type and done status.
+     *
+     * @return serialized task type and done status.
+     */
+    protected String typeAndStatusStorageString() {
+        return type.getSymbol() + " | " + getStorageStatus();
+    }
+
+    /**
+     * Returns the serialized tag field, if this task has tags.
+     *
+     * @return storage suffix for tags, or an empty string if there are no tags.
+     */
+    protected String tagsStorageString() {
+        if (tags.isEmpty()) {
+            return "";
+        }
+        return " | " + String.join(" ", tags);
+    }
+
+    /**
+     * Returns whether this task's description or tags contain the given keyword.
      *
      * @param keyword text to search for
-     * @return true if the description contains the keyword
+     * @return true if the description or tags contain the keyword
      */
     public boolean containsKeyword(String keyword) {
-        return description.toLowerCase(Locale.ROOT).contains(keyword.toLowerCase(Locale.ROOT));
+        String lowerCaseKeyword = keyword.toLowerCase(Locale.ROOT);
+        return description.toLowerCase(Locale.ROOT).contains(lowerCaseKeyword)
+                || tags.stream().anyMatch(tag -> tag.toLowerCase(Locale.ROOT).contains(lowerCaseKeyword));
+    }
+
+    /**
+     * Adds a tag to this task.
+     *
+     * @param tag tag text, including the leading #.
+     */
+    public void addTag(String tag) {
+        assert tag != null : "Task tag should be non-null.";
+        assert isValidTag(tag) : "Task tag should be valid.";
+        tags.add(tag);
+    }
+
+    /**
+     * Returns whether the given text is a valid task tag.
+     *
+     * @param tag tag text to check.
+     * @return true if the tag starts with # and contains no spaces.
+     */
+    public static boolean isValidTag(String tag) {
+        return tag != null && tag.startsWith("#") && tag.length() > 1 && !tag.contains(" ");
     }
 
     /**
@@ -74,7 +122,28 @@ public class Task {
      */
     @Override
     public String toString() {
+        return baseDisplayString() + tagsDisplayString();
+    }
+
+    /**
+     * Returns this task's display text without tags.
+     *
+     * @return task type, status, and description.
+     */
+    protected String baseDisplayString() {
         return "[" + type.getSymbol() + "][" + getStatusIcon() + "] " + description;
+    }
+
+    /**
+     * Returns the display suffix for tags, if this task has tags.
+     *
+     * @return display suffix for tags, or an empty string if there are no tags.
+     */
+    protected String tagsDisplayString() {
+        if (tags.isEmpty()) {
+            return "";
+        }
+        return " " + String.join(" ", tags);
     }
 
     private String getStatusIcon() {

@@ -30,6 +30,7 @@ public class Storage {
     private static final int TODO_FIELD_COUNT = 3;
     private static final int DEADLINE_FIELD_COUNT = 4;
     private static final int EVENT_FIELD_COUNT = 5;
+    private static final int TAG_FIELD_OFFSET = 1;
     private static final String DONE_STATUS = "1";
     private static final String NOT_DONE_STATUS = "0";
 
@@ -138,10 +139,12 @@ public class Storage {
      * @throws BobbyException if the todo field count is invalid.
      */
     private static Todo createTodo(String[] parts) throws BobbyException {
-        if (parts.length != TODO_FIELD_COUNT) {
+        if (!hasValidFieldCount(parts, TODO_FIELD_COUNT)) {
             throw new BobbyException("The saved task file contains an invalid todo.");
         }
-        return new Todo(parts[DESCRIPTION_INDEX]);
+        Todo todo = new Todo(parts[DESCRIPTION_INDEX]);
+        restoreTags(todo, parts, TODO_FIELD_COUNT);
+        return todo;
     }
 
     /**
@@ -152,10 +155,12 @@ public class Storage {
      * @throws BobbyException if the deadline field count or date is invalid.
      */
     private static Deadline createDeadline(String[] parts) throws BobbyException {
-        if (parts.length != DEADLINE_FIELD_COUNT) {
+        if (!hasValidFieldCount(parts, DEADLINE_FIELD_COUNT)) {
             throw new BobbyException("The saved task file contains an invalid deadline.");
         }
-        return new Deadline(parts[DESCRIPTION_INDEX], DateTimeParser.parse(parts[DEADLINE_BY_INDEX]));
+        Deadline deadline = new Deadline(parts[DESCRIPTION_INDEX], DateTimeParser.parse(parts[DEADLINE_BY_INDEX]));
+        restoreTags(deadline, parts, DEADLINE_FIELD_COUNT);
+        return deadline;
     }
 
     /**
@@ -166,10 +171,46 @@ public class Storage {
      * @throws BobbyException if the event field count or date fields are invalid.
      */
     private static Event createEvent(String[] parts) throws BobbyException {
-        if (parts.length != EVENT_FIELD_COUNT) {
+        if (!hasValidFieldCount(parts, EVENT_FIELD_COUNT)) {
             throw new BobbyException("The saved task file contains an invalid event.");
         }
-        return new Event(parts[DESCRIPTION_INDEX], DateTimeParser.parse(parts[EVENT_FROM_INDEX]),
+        Event event = new Event(parts[DESCRIPTION_INDEX], DateTimeParser.parse(parts[EVENT_FROM_INDEX]),
                 DateTimeParser.parse(parts[EVENT_TO_INDEX]));
+        restoreTags(event, parts, EVENT_FIELD_COUNT);
+        return event;
+    }
+
+    /**
+     * Returns whether split task fields have the required fields and optional tag field.
+     *
+     * @param parts split task fields.
+     * @param requiredFieldCount number of fields required by the task type.
+     * @return true if the field count is valid.
+     */
+    private static boolean hasValidFieldCount(String[] parts, int requiredFieldCount) {
+        return parts.length == requiredFieldCount || parts.length == requiredFieldCount + TAG_FIELD_OFFSET;
+    }
+
+    /**
+     * Restores tags from a saved task row.
+     *
+     * @param task task to receive the tags.
+     * @param parts split task fields.
+     * @param tagIndex index of the optional tag field.
+     * @throws BobbyException if any saved tag is invalid.
+     */
+    private static void restoreTags(Task task, String[] parts, int tagIndex) throws BobbyException {
+        if (parts.length == tagIndex) {
+            return;
+        }
+
+        String tagField = parts[tagIndex].trim();
+        String[] tags = tagField.split(" ");
+        for (String tag : tags) {
+            if (!Task.isValidTag(tag)) {
+                throw new BobbyException("The saved task file contains an invalid tag.");
+            }
+            task.addTag(tag);
+        }
     }
 }

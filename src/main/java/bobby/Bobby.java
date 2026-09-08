@@ -17,6 +17,7 @@ public class Bobby {
     private static final String MARK_COMMAND = "mark";
     private static final String UNMARK_COMMAND = "unmark";
     private static final String DELETE_COMMAND = "delete";
+    private static final String TAG_COMMAND = "tag";
     private static final String FIND_COMMAND = "find";
 
     private final TaskList tasks;
@@ -112,6 +113,8 @@ public class Bobby {
             return handleUnmark(command, tasks);
         } else if (Parser.isDelete(command)) {
             return handleDelete(command, tasks);
+        } else if (Parser.isTag(command)) {
+            return handleTag(command, tasks);
         } else {
             return handleAdd(command, tasks);
         }
@@ -184,6 +187,21 @@ public class Bobby {
         Storage.saveTasks(tasks.asList());
         return "Noted. I've removed this task:\n  " + removedTask
                 + "\nNow you have " + tasks.size() + " tasks in the list.";
+    }
+
+    /**
+     * Adds a tag to a task, saves the task list, and returns the response.
+     *
+     * @param command full user command.
+     * @param tasks current task list.
+     * @return tag confirmation response.
+     * @throws BobbyException if the task number or tag is invalid, or saving fails.
+     */
+    private static String handleTag(String command, TaskList tasks) throws BobbyException {
+        Parser.TagCommand tagCommand = Parser.parseTagCommand(command, tasks);
+        Task task = tasks.addTag(tagCommand.taskIndex(), tagCommand.tag());
+        Storage.saveTasks(tasks.asList());
+        return "Tagged this task:\n  " + task;
     }
 
     /**

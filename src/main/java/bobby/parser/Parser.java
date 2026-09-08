@@ -15,6 +15,7 @@ public class Parser {
     private static final String MARK_COMMAND = "mark";
     private static final String UNMARK_COMMAND = "unmark";
     private static final String DELETE_COMMAND = "delete";
+    private static final String TAG_COMMAND = "tag";
     private static final String FIND_COMMAND = "find";
     private static final String TODO_COMMAND = "todo";
     private static final String DEADLINE_COMMAND = "deadline";
@@ -68,6 +69,16 @@ public class Parser {
     }
 
     /**
+     * Returns whether the input is a tag command.
+     *
+     * @param command user input.
+     * @return true if this is a tag command.
+     */
+    public static boolean isTag(String command) {
+        return isCommand(command, TAG_COMMAND);
+    }
+
+    /**
      * Returns whether the input is a find command.
      *
      * @param command user input
@@ -113,6 +124,32 @@ public class Parser {
         } catch (NumberFormatException e) {
             throw new BobbyException("Task numbers should be whole numbers.");
         }
+    }
+
+    /**
+     * Parses a tag command into the selected task index and tag text.
+     *
+     * @param command full user command.
+     * @param taskList current task list.
+     * @return parsed tag command.
+     * @throws BobbyException if the task number or tag is invalid.
+     */
+    public static TagCommand parseTagCommand(String command, TaskList taskList) throws BobbyException {
+        String arguments = getRequiredSegment(command, TAG_COMMAND.length(), command.length(),
+                "Please provide a task number and tag after tag.");
+        int firstSpaceIndex = arguments.indexOf(" ");
+        if (firstSpaceIndex == -1) {
+            throw new BobbyException("Please provide a task number and tag after tag.");
+        }
+
+        int taskIndex = parseTaskIndex(TAG_COMMAND + " " + arguments.substring(0, firstSpaceIndex),
+                TAG_COMMAND, taskList);
+        String tag = getRequiredSegment(arguments, firstSpaceIndex + 1, arguments.length(),
+                "Please provide a tag after the task number.");
+        if (!Task.isValidTag(tag)) {
+            throw new BobbyException("Tags should start with # and contain no spaces.");
+        }
+        return new TagCommand(taskIndex, tag);
     }
 
     /**
@@ -210,5 +247,14 @@ public class Parser {
             throw new BobbyException(emptyMessage);
         }
         return segment;
+    }
+
+    /**
+     * Represents a parsed tag command.
+     *
+     * @param taskIndex zero-based task index.
+     * @param tag tag text, including the leading #.
+     */
+    public record TagCommand(int taskIndex, String tag) {
     }
 }
