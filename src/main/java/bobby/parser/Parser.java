@@ -82,11 +82,8 @@ public class Parser {
      * @throws BobbyException if the keyword is missing
      */
     public static String parseFindKeyword(String command) throws BobbyException {
-        String keyword = command.substring(FIND_COMMAND.length()).trim();
-        if (keyword.isEmpty()) {
-            throw new BobbyException("Please provide a keyword after find.");
-        }
-        return keyword;
+        return getRequiredSegment(command, FIND_COMMAND.length(), command.length(),
+                "Please provide a keyword after find.");
     }
 
     /**
@@ -145,14 +142,10 @@ public class Parser {
         if (byIndex == -1) {
             throw new BobbyException("Please tell me the deadline using /by.");
         }
-        String description = command.substring(DEADLINE_COMMAND.length(), byIndex).trim();
-        String by = command.substring(byIndex + BY_SEPARATOR.length()).trim();
-        if (description.isEmpty()) {
-            throw new BobbyException("The description of a deadline cannot be empty.");
-        }
-        if (by.isEmpty()) {
-            throw new BobbyException("The /by part of a deadline cannot be empty.");
-        }
+        String description = getRequiredSegment(command, DEADLINE_COMMAND.length(), byIndex,
+                "The description of a deadline cannot be empty.");
+        String by = getRequiredSegment(command, byIndex + BY_SEPARATOR.length(), command.length(),
+                "The /by part of a deadline cannot be empty.");
         return new Deadline(description, DateTimeParser.parse(by));
     }
 
@@ -169,18 +162,12 @@ public class Parser {
         if (fromIndex == -1 || toIndex == -1 || toIndex < fromIndex) {
             throw new BobbyException("Please tell me the event time using /from and /to.");
         }
-        String description = command.substring(EVENT_COMMAND.length(), fromIndex).trim();
-        String from = command.substring(fromIndex + FROM_SEPARATOR.length(), toIndex).trim();
-        String to = command.substring(toIndex + TO_SEPARATOR.length()).trim();
-        if (description.isEmpty()) {
-            throw new BobbyException("The description of an event cannot be empty.");
-        }
-        if (from.isEmpty()) {
-            throw new BobbyException("The /from part of an event cannot be empty.");
-        }
-        if (to.isEmpty()) {
-            throw new BobbyException("The /to part of an event cannot be empty.");
-        }
+        String description = getRequiredSegment(command, EVENT_COMMAND.length(), fromIndex,
+                "The description of an event cannot be empty.");
+        String from = getRequiredSegment(command, fromIndex + FROM_SEPARATOR.length(), toIndex,
+                "The /from part of an event cannot be empty.");
+        String to = getRequiredSegment(command, toIndex + TO_SEPARATOR.length(), command.length(),
+                "The /to part of an event cannot be empty.");
         return new Event(description, DateTimeParser.parse(from), DateTimeParser.parse(to));
     }
 
@@ -194,10 +181,26 @@ public class Parser {
      * @throws BobbyException if the description is empty.
      */
     private static String getDescription(String command, String commandWord, String taskType) throws BobbyException {
-        String description = command.substring(commandWord.length()).trim();
-        if (description.isEmpty()) {
-            throw new BobbyException("The description of a " + taskType + " cannot be empty.");
+        return getRequiredSegment(command, commandWord.length(), command.length(),
+                "The description of a " + taskType + " cannot be empty.");
+    }
+
+    /**
+     * Extracts and validates a required command segment.
+     *
+     * @param command full user command.
+     * @param startIndex inclusive start index of the segment.
+     * @param endIndex exclusive end index of the segment.
+     * @param emptyMessage error shown if the segment is empty.
+     * @return trimmed non-empty command segment.
+     * @throws BobbyException if the segment is empty.
+     */
+    private static String getRequiredSegment(String command, int startIndex, int endIndex, String emptyMessage)
+            throws BobbyException {
+        String segment = command.substring(startIndex, endIndex).trim();
+        if (segment.isEmpty()) {
+            throw new BobbyException(emptyMessage);
         }
-        return description;
+        return segment;
     }
 }
