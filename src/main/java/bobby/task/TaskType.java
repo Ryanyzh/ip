@@ -27,4 +27,20 @@ public enum TaskType {
     public String getSymbol() {
         return symbol;
     }
+
+    /**
+     * Returns the task type represented by the given symbol.
+     *
+     * @param symbol one-letter task type symbol.
+     * @return task type represented by the symbol.
+     * @throws IllegalArgumentException if the symbol is unknown.
+     */
+    public static TaskType fromSymbol(String symbol) {
+        for (TaskType taskType : values()) {
+            if (taskType.symbol.equals(symbol)) {
+                return taskType;
+            }
+        }
+        throw new IllegalArgumentException("Unknown task type symbol: " + symbol);
+    }
 }

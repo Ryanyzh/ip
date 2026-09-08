@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
+import java.util.Optional;
 
 import bobby.BobbyException;
 
@@ -29,9 +30,9 @@ public class DateTimeParser {
      */
     public static LocalDateTime parse(String input) throws BobbyException {
         String trimmedInput = input.trim();
-        LocalDateTime parsedDateTime = parseDateTime(trimmedInput);
-        if (parsedDateTime != null) {
-            return parsedDateTime;
+        Optional<LocalDateTime> parsedDateTime = parseDateTime(trimmedInput);
+        if (parsedDateTime.isPresent()) {
+            return parsedDateTime.get();
         }
 
         try {
@@ -58,17 +59,17 @@ public class DateTimeParser {
      * Tries each supported date-time pattern that includes both date and time components.
      *
      * @param input trimmed date-time text.
-     * @return parsed date-time, or null if none of the supported patterns match.
+     * @return parsed date-time, or an empty result if none of the supported patterns match.
      */
-    private static LocalDateTime parseDateTime(String input) {
+    private static Optional<LocalDateTime> parseDateTime(String input) {
         DateTimeFormatter[] formatters = {ISO_DATE_TIME, DASH_DATE_TIME, SLASH_DATE_TIME};
         for (DateTimeFormatter formatter : formatters) {
             try {
-                return LocalDateTime.parse(input, formatter);
+                return Optional.of(LocalDateTime.parse(input, formatter));
             } catch (DateTimeParseException e) {
                 // Try the next supported format.
             }
         }
-        return null;
+        return Optional.empty();
     }
 }
