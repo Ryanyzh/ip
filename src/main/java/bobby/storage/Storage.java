@@ -10,6 +10,7 @@ import bobby.BobbyException;
 import bobby.task.Deadline;
 import bobby.task.Event;
 import bobby.task.Task;
+import bobby.task.TaskType;
 import bobby.task.Todo;
 import bobby.util.DateTimeParser;
 
@@ -29,9 +30,6 @@ public class Storage {
     private static final int TODO_FIELD_COUNT = 3;
     private static final int DEADLINE_FIELD_COUNT = 4;
     private static final int EVENT_FIELD_COUNT = 5;
-    private static final String TODO_TYPE = "T";
-    private static final String DEADLINE_TYPE = "D";
-    private static final String EVENT_TYPE = "E";
     private static final String DONE_STATUS = "1";
     private static final String NOT_DONE_STATUS = "0";
 
@@ -109,12 +107,27 @@ public class Storage {
      * @throws BobbyException if the task type is unknown or its fields are invalid.
      */
     private static Task createTask(String[] parts) throws BobbyException {
-        return switch (parts[TASK_TYPE_INDEX]) {
-            case TODO_TYPE -> createTodo(parts);
-            case DEADLINE_TYPE -> createDeadline(parts);
-            case EVENT_TYPE -> createEvent(parts);
-            default -> throw new BobbyException("The saved task file contains an invalid task type.");
+        TaskType taskType = parseTaskType(parts[TASK_TYPE_INDEX]);
+        return switch (taskType) {
+            case TODO -> createTodo(parts);
+            case DEADLINE -> createDeadline(parts);
+            case EVENT -> createEvent(parts);
         };
+    }
+
+    /**
+     * Parses a task type symbol from the save file.
+     *
+     * @param symbol saved task type symbol.
+     * @return task type represented by the symbol.
+     * @throws BobbyException if the symbol is unknown.
+     */
+    private static TaskType parseTaskType(String symbol) throws BobbyException {
+        try {
+            return TaskType.fromSymbol(symbol);
+        } catch (IllegalArgumentException e) {
+            throw new BobbyException("The saved task file contains an invalid task type.");
+        }
     }
 
     /**
