@@ -66,7 +66,7 @@ public class Storage {
      * @param tasks current task list.
      * @throws BobbyException if the tasks cannot be saved.
      */
-    public static void saveTasks(ArrayList<Task> tasks) throws BobbyException {
+    public static void saveTasks(List<Task> tasks) throws BobbyException {
         try {
             Files.createDirectories(DATA_FILE.getParent());
             ArrayList<String> lines = new ArrayList<>();

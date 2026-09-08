@@ -1,20 +1,21 @@
 package bobby.task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Stores the task list and provides operations that change or inspect it.
  */
 public class TaskList {
-    private final ArrayList<Task> tasks;
+    private final List<Task> tasks;
 
     /**
-     * Creates a task list backed by the given tasks.
+     * Creates a task list from the given tasks.
      *
      * @param tasks tasks loaded from storage.
      */
-    public TaskList(ArrayList<Task> tasks) {
-        this.tasks = tasks;
+    public TaskList(List<Task> tasks) {
+        this.tasks = new ArrayList<>(tasks);
     }
 
     /**
@@ -29,10 +30,10 @@ public class TaskList {
     /**
      * Returns tasks whose descriptions contain the given keyword.
      *
-     * @param keyword text to search for
-     * @return matching tasks in their current list order
+     * @param keyword text to search for.
+     * @return matching tasks in their current list order.
      */
-    public ArrayList<Task> find(String keyword) {
+    public List<Task> find(String keyword) {
         ArrayList<Task> matchingTasks = new ArrayList<>();
         for (Task task : tasks) {
             if (task.containsKeyword(keyword)) {
@@ -96,11 +97,11 @@ public class TaskList {
     }
 
     /**
-     * Returns the backing list for display and storage.
+     * Returns a copy of the current tasks for display and storage.
      *
      * @return current tasks.
      */
-    public ArrayList<Task> asList() {
-        return tasks;
+    public List<Task> asList() {
+        return new ArrayList<>(tasks);
     }
 }

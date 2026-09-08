@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +35,7 @@ class TaskListTest {
         taskList.add(secondTask);
         taskList.add(thirdTask);
 
-        ArrayList<Task> matchingTasks = taskList.find("book");
+        List<Task> matchingTasks = taskList.find("book");
 
         assertEquals(2, matchingTasks.size());
         assertSame(firstTask, matchingTasks.get(0));
@@ -95,5 +96,29 @@ class TaskListTest {
         assertFalse(taskList.isValidIndex(-1));
         assertTrue(taskList.isValidIndex(0));
         assertFalse(taskList.isValidIndex(1));
+    }
+
+    @Test
+    void constructor_mutatingOriginalList_doesNotChangeTaskList() {
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(new Todo("only task"));
+        TaskList taskList = new TaskList(tasks);
+
+        tasks.clear();
+
+        assertEquals(1, taskList.size());
+        assertEquals("[T][ ] only task", taskList.asList().get(0).toString());
+    }
+
+    @Test
+    void asList_mutatingReturnedList_doesNotChangeTaskList() {
+        TaskList taskList = new TaskList(new ArrayList<>());
+        taskList.add(new Todo("only task"));
+
+        List<Task> tasks = taskList.asList();
+        tasks.clear();
+
+        assertEquals(1, taskList.size());
+        assertEquals("[T][ ] only task", taskList.asList().get(0).toString());
     }
 }

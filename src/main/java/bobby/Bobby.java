@@ -1,6 +1,7 @@
 package bobby;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import bobby.parser.Parser;
 import bobby.storage.Storage;
@@ -225,7 +226,7 @@ public class Bobby {
                 + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
-    private static String formatTaskList(String heading, ArrayList<Task> tasks) {
+    private static String formatTaskList(String heading, List<Task> tasks) {
         StringBuilder response = new StringBuilder(heading);
         for (int i = 0; i < tasks.size(); i++) {
             response.append("\n").append(i + 1).append(".").append(tasks.get(i));
