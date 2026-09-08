@@ -126,33 +126,103 @@ public class Bobby {
 
     private static String handleCommand(String command, TaskList tasks) throws BobbyException {
         if (command.equals(LIST_COMMAND)) {
-            return formatTaskList("Here are the tasks in your list:", tasks.asList());
+            return handleList(tasks);
         } else if (Parser.isFind(command)) {
-            String keyword = Parser.parseFindKeyword(command);
-            return formatTaskList("Here are the matching tasks in your list:", tasks.find(keyword));
+            return handleFind(command, tasks);
         } else if (Parser.isMark(command)) {
-            int taskIndex = Parser.parseTaskIndex(command, MARK_COMMAND, tasks);
-            Task task = tasks.mark(taskIndex);
-            Storage.saveTasks(tasks.asList());
-            return "Nice! I've marked this task as done:\n  " + task;
+            return handleMark(command, tasks);
         } else if (Parser.isUnmark(command)) {
-            int taskIndex = Parser.parseTaskIndex(command, UNMARK_COMMAND, tasks);
-            Task task = tasks.unmark(taskIndex);
-            Storage.saveTasks(tasks.asList());
-            return "OK, I've marked this task as not done yet:\n  " + task;
+            return handleUnmark(command, tasks);
         } else if (Parser.isDelete(command)) {
-            int taskIndex = Parser.parseTaskIndex(command, DELETE_COMMAND, tasks);
-            Task removedTask = tasks.delete(taskIndex);
-            Storage.saveTasks(tasks.asList());
-            return "Noted. I've removed this task:\n  " + removedTask
-                    + "\nNow you have " + tasks.size() + " tasks in the list.";
+            return handleDelete(command, tasks);
         } else {
-            Task task = Parser.parseTask(command);
-            tasks.add(task);
-            Storage.saveTasks(tasks.asList());
-            return "Got it. I've added this task:\n  " + task
-                    + "\nNow you have " + tasks.size() + " tasks in the list.";
+            return handleAdd(command, tasks);
         }
+    }
+
+    /**
+     * Returns the response for a list command.
+     *
+     * @param tasks current task list.
+     * @return formatted list response.
+     */
+    private static String handleList(TaskList tasks) {
+        return formatTaskList("Here are the tasks in your list:", tasks.asList());
+    }
+
+    /**
+     * Returns the response for a find command.
+     *
+     * @param command full user command.
+     * @param tasks current task list.
+     * @return formatted search response.
+     * @throws BobbyException if the keyword is missing.
+     */
+    private static String handleFind(String command, TaskList tasks) throws BobbyException {
+        String keyword = Parser.parseFindKeyword(command);
+        return formatTaskList("Here are the matching tasks in your list:", tasks.find(keyword));
+    }
+
+    /**
+     * Marks a task as done, saves the task list, and returns the response.
+     *
+     * @param command full user command.
+     * @param tasks current task list.
+     * @return mark confirmation response.
+     * @throws BobbyException if the task number is invalid or saving fails.
+     */
+    private static String handleMark(String command, TaskList tasks) throws BobbyException {
+        int taskIndex = Parser.parseTaskIndex(command, MARK_COMMAND, tasks);
+        Task task = tasks.mark(taskIndex);
+        Storage.saveTasks(tasks.asList());
+        return "Nice! I've marked this task as done:\n  " + task;
+    }
+
+    /**
+     * Marks a task as not done, saves the task list, and returns the response.
+     *
+     * @param command full user command.
+     * @param tasks current task list.
+     * @return unmark confirmation response.
+     * @throws BobbyException if the task number is invalid or saving fails.
+     */
+    private static String handleUnmark(String command, TaskList tasks) throws BobbyException {
+        int taskIndex = Parser.parseTaskIndex(command, UNMARK_COMMAND, tasks);
+        Task task = tasks.unmark(taskIndex);
+        Storage.saveTasks(tasks.asList());
+        return "OK, I've marked this task as not done yet:\n  " + task;
+    }
+
+    /**
+     * Deletes a task, saves the task list, and returns the response.
+     *
+     * @param command full user command.
+     * @param tasks current task list.
+     * @return delete confirmation response.
+     * @throws BobbyException if the task number is invalid or saving fails.
+     */
+    private static String handleDelete(String command, TaskList tasks) throws BobbyException {
+        int taskIndex = Parser.parseTaskIndex(command, DELETE_COMMAND, tasks);
+        Task removedTask = tasks.delete(taskIndex);
+        Storage.saveTasks(tasks.asList());
+        return "Noted. I've removed this task:\n  " + removedTask
+                + "\nNow you have " + tasks.size() + " tasks in the list.";
+    }
+
+    /**
+     * Adds a new task, saves the task list, and returns the response.
+     *
+     * @param command full user command.
+     * @param tasks current task list.
+     * @return add confirmation response.
+     * @throws BobbyException if the task command is invalid or saving fails.
+     */
+    private static String handleAdd(String command, TaskList tasks) throws BobbyException {
+        Task task = Parser.parseTask(command);
+        tasks.add(task);
+        Storage.saveTasks(tasks.asList());
+        return "Got it. I've added this task:\n  " + task
+                + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
     private static String formatTaskList(String heading, ArrayList<Task> tasks) {
