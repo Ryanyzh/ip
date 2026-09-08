@@ -54,10 +54,9 @@ public class Storage {
     public static void saveTasks(ArrayList<Task> tasks) throws BobbyException {
         try {
             Files.createDirectories(DATA_FILE.getParent());
-            ArrayList<String> lines = new ArrayList<>();
-            for (Task task : tasks) {
-                lines.add(task.toStorageString());
-            }
+            List<String> lines = tasks.stream()
+                    .map(Task::toStorageString)
+                    .toList();
             Files.write(DATA_FILE, lines);
         } catch (IOException e) {
             throw new BobbyException("I couldn't save the task list.");
