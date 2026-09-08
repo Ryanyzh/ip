@@ -15,6 +15,7 @@ public class TaskList {
      * @param tasks tasks loaded from storage.
      */
     public TaskList(List<Task> tasks) {
+        assert tasks != null : "TaskList should be backed by a non-null list.";
         this.tasks = new ArrayList<>(tasks);
     }
 
@@ -24,6 +25,7 @@ public class TaskList {
      * @param task task to add.
      */
     public void add(Task task) {
+        assert task != null : "Cannot add a null task.";
         tasks.add(task);
     }
 
@@ -50,6 +52,7 @@ public class TaskList {
      * @return deleted task.
      */
     public Task delete(int taskIndex) {
+        assert isValidIndex(taskIndex) : "Delete should receive a valid task index.";
         return tasks.remove(taskIndex);
     }
 
@@ -60,6 +63,7 @@ public class TaskList {
      * @return marked task.
      */
     public Task mark(int taskIndex) {
+        assert isValidIndex(taskIndex) : "Mark should receive a valid task index.";
         Task task = tasks.get(taskIndex);
         task.markAsDone();
         return task;
@@ -72,6 +76,7 @@ public class TaskList {
      * @return unmarked task.
      */
     public Task unmark(int taskIndex) {
+        assert isValidIndex(taskIndex) : "Unmark should receive a valid task index.";
         Task task = tasks.get(taskIndex);
         task.markAsNotDone();
         return task;

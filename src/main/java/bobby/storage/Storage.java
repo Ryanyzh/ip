@@ -91,6 +91,7 @@ public class Storage {
         }
 
         Task task = createTask(parts);
+        assert task != null : "Saved task row should create a task.";
         if (parts[STATUS_INDEX].equals(DONE_STATUS)) {
             task.markAsDone();
         } else if (!parts[STATUS_INDEX].equals(NOT_DONE_STATUS)) {

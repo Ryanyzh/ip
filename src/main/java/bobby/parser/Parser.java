@@ -31,6 +31,9 @@ public class Parser {
      * @return true if the command matches.
      */
     public static boolean isCommand(String command, String commandWord) {
+        assert command != null : "Command should be non-null before matching.";
+        assert commandWord != null : "Command word should be non-null before matching.";
+
         return command.equals(commandWord) || command.startsWith(commandWord + " ");
     }
 
@@ -105,6 +108,7 @@ public class Parser {
             if (!taskList.isValidIndex(taskIndex)) {
                 throw new BobbyException("I couldn't find that task number.");
             }
+            assert taskIndex >= 0 : "Parsed task index should be zero or positive.";
             return taskIndex;
         } catch (NumberFormatException e) {
             throw new BobbyException("Task numbers should be whole numbers.");
@@ -138,6 +142,8 @@ public class Parser {
      * @throws BobbyException if the description or /by field is missing or invalid.
      */
     private static Deadline parseDeadline(String command) throws BobbyException {
+        assert isCommand(command, DEADLINE_COMMAND) : "Deadline parser should receive a deadline command.";
+
         int byIndex = command.indexOf(BY_SEPARATOR);
         if (byIndex == -1) {
             throw new BobbyException("Please tell me the deadline using /by.");
@@ -157,6 +163,8 @@ public class Parser {
      * @throws BobbyException if the description, /from field, or /to field is missing or invalid.
      */
     private static Event parseEvent(String command) throws BobbyException {
+        assert isCommand(command, EVENT_COMMAND) : "Event parser should receive an event command.";
+
         int fromIndex = command.indexOf(FROM_SEPARATOR);
         int toIndex = command.indexOf(TO_SEPARATOR);
         if (fromIndex == -1 || toIndex == -1 || toIndex < fromIndex) {
