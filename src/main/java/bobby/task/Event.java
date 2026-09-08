@@ -34,8 +34,8 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return super.toString() + " (from: " + DateTimeParser.formatForDisplay(from)
-                + " to: " + DateTimeParser.formatForDisplay(to) + ")";
+        return baseDisplayString() + " (from: " + DateTimeParser.formatForDisplay(from)
+                + " to: " + DateTimeParser.formatForDisplay(to) + ")" + tagsDisplayString();
     }
 
     /**
@@ -45,6 +45,7 @@ public class Event extends Task {
      */
     @Override
     public String toStorageString() {
-        return super.toStorageString() + " | " + from + " | " + to;
+        return typeAndStatusStorageString() + " | " + getDescription()
+                + " | " + from + " | " + to + tagsStorageString();
     }
 }

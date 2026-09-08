@@ -43,6 +43,22 @@ class TaskListTest {
     }
 
     @Test
+    void find_keywordMatchesTags_returnsMatchingTasksInOrder() {
+        TaskList taskList = new TaskList(new ArrayList<>());
+        Todo firstTask = new Todo("read book");
+        Todo secondTask = new Todo("buy milk");
+        taskList.add(firstTask);
+        taskList.add(secondTask);
+        taskList.addTag(0, "#fun");
+        taskList.addTag(1, "#errand");
+
+        List<Task> matchingTasks = taskList.find("#fun");
+
+        assertEquals(1, matchingTasks.size());
+        assertSame(firstTask, matchingTasks.get(0));
+    }
+
+    @Test
     void find_keywordDoesNotMatchAnyDescription_returnsEmptyList() {
         TaskList taskList = new TaskList(new ArrayList<>());
         taskList.add(new Todo("read book"));
@@ -86,6 +102,22 @@ class TaskListTest {
         assertEquals(2, taskList.size());
         assertSame(firstTask, taskList.asList().get(0));
         assertSame(thirdTask, taskList.asList().get(1));
+    }
+
+    @Test
+    void addTag_addsTagToSelectedTaskOnly() {
+        TaskList taskList = new TaskList(new ArrayList<>());
+        Todo firstTask = new Todo("first");
+        Todo secondTask = new Todo("second");
+        taskList.add(firstTask);
+        taskList.add(secondTask);
+
+        Task taggedTask = taskList.addTag(1, "#fun");
+
+        assertSame(secondTask, taggedTask);
+        assertEquals("[T][ ] first", firstTask.toString());
+        assertEquals("[T][ ] second #fun", secondTask.toString());
+        assertEquals("T | 0 | second | #fun", secondTask.toStorageString());
     }
 
     @Test

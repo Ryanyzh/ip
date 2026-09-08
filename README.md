@@ -38,3 +38,23 @@ To build the project:
 ```
 
 **Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+
+## Bobby commands
+
+Bobby supports the following commands:
+
+| Command | Format | Example |
+| --- | --- | --- |
+| Add a todo | `todo DESCRIPTION` | `todo borrow book` |
+| Add a deadline | `deadline DESCRIPTION /by DATE` | `deadline return book /by 2019-12-08` |
+| Add an event | `event DESCRIPTION /from START /to END` | `event meeting /from 2019-12-02 1400 /to 2019-12-02 1600` |
+| List tasks | `list` | `list` |
+| Mark a task as done | `mark TASK_NUMBER` | `mark 1` |
+| Mark a task as not done | `unmark TASK_NUMBER` | `unmark 1` |
+| Delete a task | `delete TASK_NUMBER` | `delete 1` |
+| Tag a task | `tag TASK_NUMBER #TAG` | `tag 1 #urgent` |
+| Find tasks | `find KEYWORD` | `find book` |
+| Exit Bobby | `bye` | `bye` |
+
+Tags must start with `#` and cannot contain spaces. Tagged tasks show their tags in `list` and can be found with
+`find`, for example `find #urgent`.
