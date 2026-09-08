@@ -36,6 +36,7 @@ public class Bobby {
         }
         tasks = loadedTasks;
         loadingError = errorMessage;
+        assert tasks != null : "Bobby should always have a task list.";
     }
 
     /**
@@ -113,6 +114,7 @@ public class Bobby {
      * @return response to show in the GUI.
      */
     public String getResponse(String command) {
+        assert command != null : "GUI should pass a non-null command.";
         if (isExitCommand(command)) {
             return "Goodbye! Bobby signing out...";
         }
@@ -125,6 +127,9 @@ public class Bobby {
     }
 
     private static String handleCommand(String command, TaskList tasks) throws BobbyException {
+        assert command != null : "Command should be non-null before handling.";
+        assert tasks != null : "Task list should be non-null before handling.";
+
         if (command.equals(LIST_COMMAND)) {
             return formatTaskList("Here are the tasks in your list:", tasks.asList());
         } else if (Parser.isFind(command)) {
@@ -164,6 +169,10 @@ public class Bobby {
      * @throws BobbyException if the command is invalid.
      */
     private static void handleCommand(String command, TaskList tasks, Ui ui) throws BobbyException {
+        assert command != null : "Command should be non-null before handling.";
+        assert tasks != null : "Task list should be non-null before handling.";
+        assert ui != null : "UI should be non-null before handling.";
+
         if (command.equals(LIST_COMMAND)) {
             ui.showTaskList(tasks.asList());
         } else if (Parser.isFind(command)) {
@@ -193,6 +202,9 @@ public class Bobby {
     }
 
     private static String formatTaskList(String heading, ArrayList<Task> tasks) {
+        assert heading != null : "Task-list heading should be non-null.";
+        assert tasks != null : "Tasks to format should be non-null.";
+
         StringBuilder response = new StringBuilder(heading);
         for (int i = 0; i < tasks.size(); i++) {
             response.append("\n").append(i + 1).append(".").append(tasks.get(i));

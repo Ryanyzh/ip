@@ -36,6 +36,11 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     public void initialize() {
+        assert scrollPane != null : "FXML should inject the scroll pane.";
+        assert dialogContainer != null : "FXML should inject the dialog container.";
+        assert userInput != null : "FXML should inject the user input field.";
+        assert sendButton != null : "FXML should inject the send button.";
+
         dialogContainer.heightProperty().addListener(observable -> scrollPane.setVvalue(1.0));
     }
 
@@ -45,6 +50,8 @@ public class MainWindow extends AnchorPane {
      * @param bobby Bobby instance to use for command handling.
      */
     public void setBobby(Bobby bobby) {
+        assert bobby != null : "Main should inject a Bobby instance.";
+
         this.bobby = bobby;
         dialogContainer.getChildren().add(DialogBox.getBobbyDialog(bobby.getWelcomeMessage(), bobbyImage));
     }
@@ -54,6 +61,8 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void handleUserInput() {
+        assert bobby != null : "Bobby should be injected before handling input.";
+
         String userText = userInput.getText().trim();
         if (userText.isEmpty()) {
             return;
