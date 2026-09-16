@@ -38,6 +38,8 @@ class DateTimeParserTest {
     void formatForDisplay_midnightAndNonMidnightDateTimes_returnsReadableText() {
         assertEquals("Dec 2 2019", DateTimeParser.formatForDisplay(
                 LocalDateTime.of(2019, 12, 2, 0, 0)));
+        assertEquals("Dec 2 2019, 12:00pm", DateTimeParser.formatForDisplay(
+                LocalDateTime.of(2019, 12, 2, 12, 0)));
         assertEquals("Dec 2 2019, 6:00pm", DateTimeParser.formatForDisplay(
                 LocalDateTime.of(2019, 12, 2, 18, 0)));
     }

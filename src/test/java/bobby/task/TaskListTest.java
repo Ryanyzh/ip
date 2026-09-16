@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,17 @@ class TaskListTest {
         taskList.add(new Todo("borrow book"));
 
         assertThrows(BobbyException.class, () -> taskList.add(new Todo("borrow book")));
+    }
+
+    @Test
+    void add_sameDescriptionButDifferentTaskDetails_appendsBothTasks() throws BobbyException {
+        TaskList taskList = new TaskList(new ArrayList<>());
+
+        taskList.add(new Todo("read book"));
+        taskList.add(new Deadline("read book", LocalDateTime.of(2019, 12, 6, 0, 0)));
+        taskList.add(new Deadline("read book", LocalDateTime.of(2019, 12, 7, 0, 0)));
+
+        assertEquals(3, taskList.size());
     }
 
     @Test

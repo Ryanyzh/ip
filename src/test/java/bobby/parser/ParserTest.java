@@ -58,6 +58,11 @@ class ParserTest {
     }
 
     @Test
+    void normalizeCommand_leadingTrailingAndRepeatedWhitespace_returnsSingleSpacedCommand() {
+        assertEquals("todo read book", Parser.normalizeCommand("  todo   read\tbook  "));
+    }
+
+    @Test
     void parseTask_validTaskCommands_returnsCorrectTaskTypesAndDisplayText() throws BobbyException {
         Todo todo = assertInstanceOf(Todo.class, Parser.parseTask("todo   borrow   book"));
 
