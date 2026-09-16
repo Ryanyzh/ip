@@ -33,7 +33,7 @@ public class Bobby {
             loadedTasks = new TaskList(Storage.loadTasks());
         } catch (BobbyException e) {
             loadedTasks = new TaskList(new ArrayList<>());
-            errorMessage = "Bobby needs a clearer save file: " + e.getMessage();
+            errorMessage = "The old scroll is clouded: " + e.getMessage();
         }
         tasks = loadedTasks;
         loadingError = errorMessage;
@@ -55,7 +55,8 @@ public class Bobby {
      * @return welcome message, with a loading error first if the save file cannot be read.
      */
     public String getWelcomeMessage() {
-        String welcomeMessage = "Hello! I'm Bobby.\nWhat can I do for you?";
+        String welcomeMessage = "Greetings, young one.\nI am Bobby.\n"
+                + "Share your task, and we shall bring order to the day.";
         if (loadingError == null) {
             return welcomeMessage;
         }
@@ -82,13 +83,13 @@ public class Bobby {
         assert command != null : "GUI should pass a non-null command.";
         command = Parser.normalizeCommand(command);
         if (isExitCommand(command)) {
-            return "Goodbye! Bobby signing out...";
+            return "The pond grows still. Until our paths meet again...";
         }
 
         try {
             return handleCommand(command, tasks);
         } catch (BobbyException e) {
-            return "Bobby needs a clearer command: " + e.getMessage();
+            return "The path is misty: " + e.getMessage();
         }
     }
 
@@ -129,7 +130,7 @@ public class Bobby {
      * @return formatted list response.
      */
     private static String handleList(TaskList tasks) {
-        return formatTaskList("Here are the tasks in your list:", tasks.asList());
+        return formatTaskList("These are the stones upon your path:", tasks.asList());
     }
 
     /**
@@ -142,7 +143,7 @@ public class Bobby {
      */
     private static String handleFind(String command, TaskList tasks) throws BobbyException {
         String keyword = Parser.parseFindKeyword(command);
-        return formatTaskList("Here are the matching tasks in your list:", tasks.find(keyword));
+        return formatTaskList("The pond reflects these matching ripples:", tasks.find(keyword));
     }
 
     /**
@@ -157,7 +158,7 @@ public class Bobby {
         int taskIndex = Parser.parseTaskIndex(command, MARK_COMMAND, tasks);
         Task task = tasks.mark(taskIndex);
         Storage.saveTasks(tasks.asList());
-        return "Nice! I've marked this task as done:\n  " + task;
+        return "Peace. This task now rests complete:\n  " + task;
     }
 
     /**
@@ -172,7 +173,7 @@ public class Bobby {
         int taskIndex = Parser.parseTaskIndex(command, UNMARK_COMMAND, tasks);
         Task task = tasks.unmark(taskIndex);
         Storage.saveTasks(tasks.asList());
-        return "OK, I've marked this task as not done yet:\n  " + task;
+        return "Patience. This task returns to the path:\n  " + task;
     }
 
     /**
@@ -187,8 +188,8 @@ public class Bobby {
         int taskIndex = Parser.parseTaskIndex(command, DELETE_COMMAND, tasks);
         Task removedTask = tasks.delete(taskIndex);
         Storage.saveTasks(tasks.asList());
-        return "Noted. I've removed this task:\n  " + removedTask
-                + "\nNow you have " + tasks.size() + " tasks in the list.";
+        return "The leaf is released:\n  " + removedTask
+                + "\nNow " + tasks.size() + " tasks remain on the branch.";
     }
 
     /**
@@ -203,7 +204,7 @@ public class Bobby {
         Parser.TagCommand tagCommand = Parser.parseTagCommand(command, tasks);
         Task task = tasks.addTag(tagCommand.taskIndex(), tagCommand.tag());
         Storage.saveTasks(tasks.asList());
-        return "Tagged this task:\n  " + task;
+        return "A small mark of meaning is tied to this task:\n  " + task;
     }
 
     /**
@@ -218,8 +219,8 @@ public class Bobby {
         Task task = Parser.parseTask(command);
         tasks.add(task);
         Storage.saveTasks(tasks.asList());
-        return "Got it. I've added this task:\n  " + task
-                + "\nNow you have " + tasks.size() + " tasks in the list.";
+        return "The seed has been planted:\n  " + task
+                + "\nNow " + tasks.size() + " tasks grow in the grove.";
     }
 
     private static String formatTaskList(String heading, List<Task> tasks) {

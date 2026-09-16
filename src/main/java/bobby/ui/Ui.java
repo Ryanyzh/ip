@@ -29,7 +29,8 @@ public class Ui {
     public void showWelcome() {
         showLine();
         System.out.print(BANNER);
-        printLines("Hello! I'm Bobby.", "What can I do for you?");
+        printLines("Greetings, young one.", "I am Bobby.",
+                "Share your task, and we shall bring order to the day.");
         showLine();
     }
 
@@ -55,7 +56,7 @@ public class Ui {
      * Prints the goodbye message.
      */
     public void showGoodbye() {
-        System.out.println("Goodbye! Bobby signing out...");
+        System.out.println("The pond grows still. Until our paths meet again...");
     }
 
     /**
@@ -64,7 +65,7 @@ public class Ui {
      * @param message error details.
      */
     public void showCommandError(String message) {
-        System.out.println("Bobby needs a clearer command: " + message);
+        System.out.println("The path is misty: " + message);
     }
 
     /**
@@ -73,7 +74,7 @@ public class Ui {
      * @param message error details.
      */
     public void showLoadingError(String message) {
-        System.out.println("Bobby needs a clearer save file: " + message);
+        System.out.println("The old scroll is clouded: " + message);
     }
 
     /**

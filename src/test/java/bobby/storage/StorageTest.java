@@ -132,11 +132,11 @@ class StorageTest {
 
         Storage.saveTasks(List.of(todo, deadline, event));
 
-        assertEquals("""
-                T | 1 | read book
-                D | 0 | submit report | 2019-12-06T00:00 | #urgent
-                E | 0 | meeting | 2019-12-02T14:00 | 2019-12-02T16:00
-                """.stripTrailing(), Files.readString(DATA_FILE).stripTrailing());
+        assertEquals(List.of(
+                "T | 1 | read book",
+                "D | 0 | submit report | 2019-12-06T00:00 | #urgent",
+                "E | 0 | meeting | 2019-12-02T14:00 | 2019-12-02T16:00"),
+                Files.readAllLines(DATA_FILE));
     }
 
     private void writeData(String... lines) throws IOException {
