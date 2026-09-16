@@ -199,6 +199,7 @@ public class Parser {
         int byIndex = command.indexOf(BY_SEPARATOR);
         String description = getRequiredSegment(command, DEADLINE_COMMAND.length(), byIndex,
                 "The description of a deadline cannot be empty.");
+        validateDescription(description);
         String by = getRequiredSegment(command, byIndex + BY_SEPARATOR.length(), command.length(),
                 "The /by part of a deadline cannot be empty.");
         return new Deadline(description, DateTimeParser.parse(by));
@@ -225,6 +226,7 @@ public class Parser {
         }
         String description = getRequiredSegment(command, EVENT_COMMAND.length(), fromIndex,
                 "The description of an event cannot be empty.");
+        validateDescription(description);
         String from = getRequiredSegment(command, fromIndex + FROM_SEPARATOR.length(), toIndex,
                 "The /from part of an event cannot be empty.");
         String to = getRequiredSegment(command, toIndex + TO_SEPARATOR.length(), command.length(),

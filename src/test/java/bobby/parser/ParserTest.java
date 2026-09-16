@@ -93,6 +93,9 @@ class ParserTest {
         assertThrows(BobbyException.class, () -> Parser.parseTask(
                 "event meeting /from 2019-12-02 1400 /from 2019-12-02 1500 /to 2019-12-02 1600"));
         assertThrows(BobbyException.class, () -> Parser.parseTask("todo read | book"));
+        assertThrows(BobbyException.class, () -> Parser.parseTask("deadline report | draft /by 2019-12-02"));
+        assertThrows(BobbyException.class, () -> Parser.parseTask(
+                "event sync | team /from 2019-12-02 1400 /to 2019-12-02 1600"));
         assertThrows(BobbyException.class, () -> Parser.parseTask("blah"));
     }
 

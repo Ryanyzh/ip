@@ -429,6 +429,8 @@ tag 2 #team
 tag 2 #team
 tag 2 #bad!
 todo pipes | break
+deadline pipes | break /by 2019-12-02
+event pipes | break /from 2019-12-02 1400 /to 2019-12-02 1600
 mark 1 2
 list
 bye
@@ -477,6 +479,12 @@ The path is misty: That task already has this tag.
 ____________________________________________________________
 ____________________________________________________________
 The path is misty: Tags should start with # and use only letters, numbers, underscores, or hyphens.
+____________________________________________________________
+____________________________________________________________
+The path is misty: Descriptions cannot contain | or control characters.
+____________________________________________________________
+____________________________________________________________
+The path is misty: Descriptions cannot contain | or control characters.
 ____________________________________________________________
 ____________________________________________________________
 The path is misty: Descriptions cannot contain | or control characters.
