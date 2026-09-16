@@ -20,20 +20,21 @@ ____________________________________________________________
 | |_) | (_) | |_) | |_) | |_| |
 |____/ \___/|_.__/|_.__/ \__, |
                          |___/ 
-Hello! I'm Bobby.
-What can I do for you?
+Greetings, young one.
+I am Bobby.
+Share your task, and we shall bring order to the day.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [T][ ] borrow book
-Now you have 1 tasks in the list.
+Now 1 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+These are the stones upon your path:
 1.[T][ ] borrow book
 ____________________________________________________________
 ____________________________________________________________
-Goodbye! Bobby signing out...
+The pond grows still. Until our paths meet again...
 ____________________________________________________________
 ```
 
@@ -61,45 +62,46 @@ ____________________________________________________________
 | |_) | (_) | |_) | |_) | |_| |
 |____/ \___/|_.__/|_.__/ \__, |
                          |___/ 
-Hello! I'm Bobby.
-What can I do for you?
+Greetings, young one.
+I am Bobby.
+Share your task, and we shall bring order to the day.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [T][ ] read book
-Now you have 1 tasks in the list.
+Now 1 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: The description of a deadline cannot be empty.
+The path is misty: The description of a deadline cannot be empty.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [D][ ] return book (by: Dec 8 2019)
-Now you have 2 tasks in the list.
+Now 2 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: The /from part of an event cannot be empty.
+The path is misty: The /from part of an event cannot be empty.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [E][ ] project meeting (from: Dec 2 2019, 2:00pm to: Dec 2 2019, 4:00pm)
-Now you have 3 tasks in the list.
+Now 3 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: I couldn't find that task number.
+The path is misty: I couldn't find that task number.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Peace. This task now rests complete:
   [D][X] return book (by: Dec 8 2019)
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+These are the stones upon your path:
 1.[T][ ] read book
 2.[D][X] return book (by: Dec 8 2019)
 3.[E][ ] project meeting (from: Dec 2 2019, 2:00pm to: Dec 2 2019, 4:00pm)
 ____________________________________________________________
 ____________________________________________________________
-Goodbye! Bobby signing out...
+The pond grows still. Until our paths meet again...
 ____________________________________________________________
 ```
 
@@ -127,45 +129,46 @@ ____________________________________________________________
 | |_) | (_) | |_) | |_) | |_| |
 |____/ \___/|_.__/|_.__/ \__, |
                          |___/ 
-Hello! I'm Bobby.
-What can I do for you?
+Greetings, young one.
+I am Bobby.
+Share your task, and we shall bring order to the day.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [T][ ] read book
-Now you have 1 tasks in the list.
+Now 1 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [D][ ] return book (by: Dec 8 2019)
-Now you have 2 tasks in the list.
+Now 2 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [T][ ] buy milk
-Now you have 3 tasks in the list.
+Now 3 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Peace. This task now rests complete:
   [T][X] read book
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Peace. This task now rests complete:
   [D][X] return book (by: Dec 8 2019)
 ____________________________________________________________
 ____________________________________________________________
-Here are the matching tasks in your list:
+The pond reflects these matching ripples:
 1.[T][X] read book
 2.[D][X] return book (by: Dec 8 2019)
 ____________________________________________________________
 ____________________________________________________________
-Here are the matching tasks in your list:
+The pond reflects these matching ripples:
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: Please provide a keyword after find.
+The path is misty: Please provide a keyword after find.
 ____________________________________________________________
 ____________________________________________________________
-Goodbye! Bobby signing out...
+The pond grows still. Until our paths meet again...
 ____________________________________________________________
 ```
 
@@ -191,37 +194,38 @@ ____________________________________________________________
 | |_) | (_) | |_) | |_) | |_| |
 |____/ \___/|_.__/|_.__/ \__, |
                          |___/ 
-Hello! I'm Bobby.
-What can I do for you?
+Greetings, young one.
+I am Bobby.
+Share your task, and we shall bring order to the day.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [T][ ] read book
-Now you have 1 tasks in the list.
+Now 1 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [T][ ] buy milk
-Now you have 2 tasks in the list.
+Now 2 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Tagged this task:
+A small mark of meaning is tied to this task:
   [T][ ] read book #reading
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: Tags should start with # and use only letters, numbers, underscores, or hyphens.
+The path is misty: Tags should start with # and use only letters, numbers, underscores, or hyphens.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+These are the stones upon your path:
 1.[T][ ] read book #reading
 2.[T][ ] buy milk
 ____________________________________________________________
 ____________________________________________________________
-Here are the matching tasks in your list:
+The pond reflects these matching ripples:
 1.[T][ ] read book #reading
 ____________________________________________________________
 ____________________________________________________________
-Goodbye! Bobby signing out...
+The pond grows still. Until our paths meet again...
 ____________________________________________________________
 ```
 
@@ -249,43 +253,44 @@ ____________________________________________________________
 | |_) | (_) | |_) | |_) | |_| |
 |____/ \___/|_.__/|_.__/ \__, |
                          |___/ 
-Hello! I'm Bobby.
-What can I do for you?
+Greetings, young one.
+I am Bobby.
+Share your task, and we shall bring order to the day.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [D][ ] write report (by: Dec 6 2019)
-Now you have 1 tasks in the list.
+Now 1 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: The /by part of a deadline cannot be empty.
+The path is misty: The /by part of a deadline cannot be empty.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: The /to part of an event cannot be empty.
+The path is misty: The /to part of an event cannot be empty.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [T][ ] buy milk
-Now you have 2 tasks in the list.
+Now 2 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Peace. This task now rests complete:
   [D][X] write report (by: Dec 6 2019)
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: Task numbers should be whole numbers.
+The path is misty: Task numbers should be whole numbers.
 ____________________________________________________________
 ____________________________________________________________
-OK, I've marked this task as not done yet:
+Patience. This task returns to the path:
   [D][ ] write report (by: Dec 6 2019)
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+These are the stones upon your path:
 1.[D][ ] write report (by: Dec 6 2019)
 2.[T][ ] buy milk
 ____________________________________________________________
 ____________________________________________________________
-Goodbye! Bobby signing out...
+The pond grows still. Until our paths meet again...
 ____________________________________________________________
 ```
 
@@ -313,35 +318,36 @@ ____________________________________________________________
 | |_) | (_) | |_) | |_) | |_| |
 |____/ \___/|_.__/|_.__/ \__, |
                          |___/ 
-Hello! I'm Bobby.
-What can I do for you?
+Greetings, young one.
+I am Bobby.
+Share your task, and we shall bring order to the day.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: The description of a todo cannot be empty.
+The path is misty: The description of a todo cannot be empty.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: I don't know what that means yet.
+The path is misty: I don't know what that means yet.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: The description of a deadline cannot be empty.
+The path is misty: The description of a deadline cannot be empty.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: Please tell me the deadline using /by.
+The path is misty: Please tell me the deadline using /by.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: Please tell me the event time using /from and /to.
+The path is misty: Please tell me the event time using /from and /to.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: Please provide a task number after mark.
+The path is misty: Please provide a task number after mark.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: Task numbers should be whole numbers.
+The path is misty: Task numbers should be whole numbers.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: I couldn't find that task number.
+The path is misty: I couldn't find that task number.
 ____________________________________________________________
 ____________________________________________________________
-Goodbye! Bobby signing out...
+The pond grows still. Until our paths meet again...
 ____________________________________________________________
 ```
 
@@ -368,42 +374,43 @@ ____________________________________________________________
 | |_) | (_) | |_) | |_) | |_| |
 |____/ \___/|_.__/|_.__/ \__, |
                          |___/ 
-Hello! I'm Bobby.
-What can I do for you?
+Greetings, young one.
+I am Bobby.
+Share your task, and we shall bring order to the day.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [T][ ] read book
-Now you have 1 tasks in the list.
+Now 1 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [D][ ] return book (by: Dec 8 2019)
-Now you have 2 tasks in the list.
+Now 2 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [E][ ] project meeting (from: Dec 2 2019, 2:00pm to: Dec 2 2019, 4:00pm)
-Now you have 3 tasks in the list.
+Now 3 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Noted. I've removed this task:
+The leaf is released:
   [D][ ] return book (by: Dec 8 2019)
-Now you have 2 tasks in the list.
+Now 2 tasks remain on the branch.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+These are the stones upon your path:
 1.[T][ ] read book
 2.[E][ ] project meeting (from: Dec 2 2019, 2:00pm to: Dec 2 2019, 4:00pm)
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: I couldn't find that task number.
+The path is misty: I couldn't find that task number.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: Task numbers should be whole numbers.
+The path is misty: Task numbers should be whole numbers.
 ____________________________________________________________
 ____________________________________________________________
-Goodbye! Bobby signing out...
+The pond grows still. Until our paths meet again...
 ____________________________________________________________
 ```
 
@@ -435,54 +442,55 @@ ____________________________________________________________
 | |_) | (_) | |_) | |_) | |_| |
 |____/ \___/|_.__/|_.__/ \__, |
                          |___/ 
-Hello! I'm Bobby.
-What can I do for you?
+Greetings, young one.
+I am Bobby.
+Share your task, and we shall bring order to the day.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [T][ ] read book
-Now you have 1 tasks in the list.
+Now 1 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: That task is already in your list.
+The path is misty: That task is already in your list.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: Please use a date format like 2019-12-02 or 2/12/2019 1800.
+The path is misty: Please use a date format like 2019-12-02 or 2/12/2019 1800.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: Please include /by only once.
+The path is misty: Please include /by only once.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: The event start time should be before the end time.
+The path is misty: The event start time should be before the end time.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [E][ ] sync (from: Dec 2 2019, 2:00pm to: Dec 2 2019, 4:00pm)
-Now you have 2 tasks in the list.
+Now 2 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Tagged this task:
+A small mark of meaning is tied to this task:
   [E][ ] sync (from: Dec 2 2019, 2:00pm to: Dec 2 2019, 4:00pm) #team
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: That task already has this tag.
+The path is misty: That task already has this tag.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: Tags should start with # and use only letters, numbers, underscores, or hyphens.
+The path is misty: Tags should start with # and use only letters, numbers, underscores, or hyphens.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: Descriptions cannot contain | or control characters.
+The path is misty: Descriptions cannot contain | or control characters.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: Please provide only one task number after mark.
+The path is misty: Please provide only one task number after mark.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+These are the stones upon your path:
 1.[T][ ] read book
 2.[E][ ] sync (from: Dec 2 2019, 2:00pm to: Dec 2 2019, 4:00pm) #team
 ____________________________________________________________
 ____________________________________________________________
-Goodbye! Bobby signing out...
+The pond grows still. Until our paths meet again...
 ____________________________________________________________
 ```
 
@@ -509,17 +517,18 @@ ____________________________________________________________
 | |_) | (_) | |_) | |_) | |_| |
 |____/ \___/|_.__/|_.__/ \__, |
                          |___/ 
-Hello! I'm Bobby.
-What can I do for you?
+Greetings, young one.
+I am Bobby.
+Share your task, and we shall bring order to the day.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+These are the stones upon your path:
 1.[T][X] read book
 2.[D][ ] return book (by: Dec 8 2019)
 3.[E][ ] project meeting (from: Dec 2 2019, 2:00pm to: Dec 2 2019, 4:00pm)
 ____________________________________________________________
 ____________________________________________________________
-Goodbye! Bobby signing out...
+The pond grows still. Until our paths meet again...
 ____________________________________________________________
 ```
 
@@ -545,39 +554,40 @@ ____________________________________________________________
 | |_) | (_) | |_) | |_) | |_| |
 |____/ \___/|_.__/|_.__/ \__, |
                          |___/ 
-Hello! I'm Bobby.
-What can I do for you?
+Greetings, young one.
+I am Bobby.
+Share your task, and we shall bring order to the day.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [T][ ] alpha
-Now you have 1 tasks in the list.
+Now 1 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [D][ ] beta (by: Dec 6 2019)
-Now you have 2 tasks in the list.
+Now 2 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [E][ ] gamma (from: Dec 2 2019, 1:00pm to: Dec 2 2019, 2:00pm)
-Now you have 3 tasks in the list.
+Now 3 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Peace. This task now rests complete:
   [D][X] beta (by: Dec 6 2019)
 ____________________________________________________________
 ____________________________________________________________
-Tagged this task:
+A small mark of meaning is tied to this task:
   [D][X] beta (by: Dec 6 2019) #urgent
 ____________________________________________________________
 ____________________________________________________________
-Noted. I've removed this task:
+The leaf is released:
   [T][ ] alpha
-Now you have 2 tasks in the list.
+Now 2 tasks remain on the branch.
 ____________________________________________________________
 ____________________________________________________________
-Goodbye! Bobby signing out...
+The pond grows still. Until our paths meet again...
 ____________________________________________________________
 ```
 
@@ -605,23 +615,24 @@ ____________________________________________________________
 | |_) | (_) | |_) | |_) | |_| |
 |____/ \___/|_.__/|_.__/ \__, |
                          |___/ 
-Hello! I'm Bobby.
-What can I do for you?
+Greetings, young one.
+I am Bobby.
+Share your task, and we shall bring order to the day.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+The seed has been planted:
   [D][ ] return book (by: Dec 2 2019, 6:00pm)
-Now you have 1 tasks in the list.
+Now 1 tasks grow in the grove.
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: Please use a date format like 2019-12-02 or 2/12/2019 1800.
+The path is misty: Please use a date format like 2019-12-02 or 2/12/2019 1800.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+These are the stones upon your path:
 1.[D][ ] return book (by: Dec 2 2019, 6:00pm)
 ____________________________________________________________
 ____________________________________________________________
-Goodbye! Bobby signing out...
+The pond grows still. Until our paths meet again...
 ____________________________________________________________
 ```
 

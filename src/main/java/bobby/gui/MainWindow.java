@@ -14,11 +14,11 @@ import javafx.scene.layout.VBox;
  * Controller for Bobby's main GUI window.
  */
 public class MainWindow extends AnchorPane {
-    private static final String COMMAND_ERROR_PREFIX = "Bobby needs a clearer command:";
-    private static final String LOADING_ERROR_PREFIX = "Bobby needs a clearer save file:";
+    private static final String COMMAND_ERROR_PREFIX = "The path is misty:";
+    private static final String LOADING_ERROR_PREFIX = "The old scroll is clouded:";
 
-    private final Image userImage = new Image(getClass().getResourceAsStream("/images/heh.png"));
-    private final Image bobbyImage = new Image(getClass().getResourceAsStream("/images/huh.gif"));
+    private final Image userImage = new Image(getClass().getResourceAsStream("/images/frombobby.png"));
+    private final Image bobbyImage = new Image(getClass().getResourceAsStream("/images/tobobby.png"));
 
     @FXML
     private ScrollPane scrollPane;

@@ -19,8 +19,8 @@ import javafx.scene.shape.Circle;
  * Shows one chat message in the conversation.
  */
 public class DialogBox extends HBox {
-    private static final double AVATAR_RADIUS = 14.0;
-    private static final double MAX_MESSAGE_WIDTH_RATIO = 0.78;
+    private static final double AVATAR_RADIUS = 21.5;
+    private static final double MAX_MESSAGE_WIDTH_RATIO = 0.74;
 
     @FXML
     private Label dialog;
@@ -43,6 +43,7 @@ public class DialogBox extends HBox {
         dialog.setText(text);
         dialog.maxWidthProperty().bind(widthProperty().multiply(MAX_MESSAGE_WIDTH_RATIO));
         displayPicture.setImage(image);
+        displayPicture.setPreserveRatio(false);
         displayPicture.setClip(new Circle(AVATAR_RADIUS, AVATAR_RADIUS, AVATAR_RADIUS));
         displayPicture.setManaged(isAvatarVisible);
         displayPicture.setVisible(isAvatarVisible);
@@ -56,7 +57,7 @@ public class DialogBox extends HBox {
      * @return user dialog box.
      */
     public static DialogBox getUserDialog(String text, Image image) {
-        DialogBox dialogBox = new DialogBox(text, image, false);
+        DialogBox dialogBox = new DialogBox(text, image, true);
         dialogBox.getStyleClass().add("user-dialog");
         return dialogBox;
     }

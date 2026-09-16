@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,7 +54,8 @@ class BobbyTest {
     void getWelcomeMessage_validSaveFile_returnsGreetingOnly() {
         Bobby bobby = new Bobby();
 
-        assertEquals("Hello! I'm Bobby.\nWhat can I do for you?", bobby.getWelcomeMessage());
+        assertEquals("Greetings, young one.\nI am Bobby.\n"
+                + "Share your task, and we shall bring order to the day.", bobby.getWelcomeMessage());
     }
 
     @Test
@@ -62,8 +64,9 @@ class BobbyTest {
 
         Bobby bobby = new Bobby();
 
-        assertEquals("Bobby needs a clearer save file: The saved task file contains an invalid task.\n"
-                + "Hello! I'm Bobby.\nWhat can I do for you?", bobby.getWelcomeMessage());
+        assertEquals("The old scroll is clouded: The saved task file contains an invalid task.\n"
+                + "Greetings, young one.\nI am Bobby.\n"
+                + "Share your task, and we shall bring order to the day.", bobby.getWelcomeMessage());
     }
 
     @Test
@@ -78,7 +81,7 @@ class BobbyTest {
     void getResponse_invalidCommand_returnsCommandError() {
         Bobby bobby = new Bobby();
 
-        assertEquals("Bobby needs a clearer command: I don't know what that means yet.",
+        assertEquals("The path is misty: I don't know what that means yet.",
                 bobby.getResponse("nonsense"));
     }
 
@@ -86,34 +89,35 @@ class BobbyTest {
     void getResponse_byeCommand_returnsGoodbye() {
         Bobby bobby = new Bobby();
 
-        assertEquals("Goodbye! Bobby signing out...", bobby.getResponse(" bye "));
+        assertEquals("The pond grows still. Until our paths meet again...", bobby.getResponse(" bye "));
     }
 
     @Test
     void handleCommand_allSupportedMutatingCommands_returnsResponsesAndSaves() throws BobbyException, IOException {
         TaskList tasks = new TaskList(new ArrayList<>());
 
-        assertEquals("Got it. I've added this task:\n  [T][ ] read book\nNow you have 1 tasks in the list.",
+        assertEquals("The seed has been planted:\n  [T][ ] read book\nNow 1 tasks grow in the grove.",
                 Bobby.handleCommand("todo read book", tasks));
-        assertEquals("Got it. I've added this task:\n  [D][ ] submit report (by: Dec 6 2019)"
-                + "\nNow you have 2 tasks in the list.",
+        assertEquals("The seed has been planted:\n  [D][ ] submit report (by: Dec 6 2019)"
+                + "\nNow 2 tasks grow in the grove.",
                 Bobby.handleCommand("deadline submit report /by 2019-12-06", tasks));
-        assertEquals("Got it. I've added this task:\n  [E][ ] meeting (from: Dec 2 2019, 2:00pm to: "
-                + "Dec 2 2019, 4:00pm)\nNow you have 3 tasks in the list.",
+        assertEquals("The seed has been planted:\n  [E][ ] meeting (from: Dec 2 2019, 2:00pm to: "
+                + "Dec 2 2019, 4:00pm)\nNow 3 tasks grow in the grove.",
                 Bobby.handleCommand("event meeting /from 2019-12-02 1400 /to 2019-12-02 1600", tasks));
-        assertEquals("Nice! I've marked this task as done:\n  [T][X] read book",
+        assertEquals("Peace. This task now rests complete:\n  [T][X] read book",
                 Bobby.handleCommand("mark 1", tasks));
-        assertEquals("OK, I've marked this task as not done yet:\n  [T][ ] read book",
+        assertEquals("Patience. This task returns to the path:\n  [T][ ] read book",
                 Bobby.handleCommand("unmark 1", tasks));
-        assertEquals("Tagged this task:\n  [D][ ] submit report (by: Dec 6 2019) #urgent",
+        assertEquals("A small mark of meaning is tied to this task:\n"
+                + "  [D][ ] submit report (by: Dec 6 2019) #urgent",
                 Bobby.handleCommand("tag 2 #urgent", tasks));
-        assertEquals("Noted. I've removed this task:\n  [T][ ] read book\nNow you have 2 tasks in the list.",
+        assertEquals("The leaf is released:\n  [T][ ] read book\nNow 2 tasks remain on the branch.",
                 Bobby.handleCommand("delete 1", tasks));
 
-        assertEquals("""
-                D | 0 | submit report | 2019-12-06T00:00 | #urgent
-                E | 0 | meeting | 2019-12-02T14:00 | 2019-12-02T16:00
-                """.stripTrailing(), Files.readString(DATA_FILE).stripTrailing());
+        assertEquals(List.of(
+                "D | 0 | submit report | 2019-12-06T00:00 | #urgent",
+                "E | 0 | meeting | 2019-12-02T14:00 | 2019-12-02T16:00"),
+                Files.readAllLines(DATA_FILE));
     }
 
     @Test
@@ -122,11 +126,11 @@ class BobbyTest {
         Bobby.handleCommand("todo read book", tasks);
         Bobby.handleCommand("todo buy milk", tasks);
 
-        assertEquals("Here are the tasks in your list:\n1.[T][ ] read book\n2.[T][ ] buy milk",
+        assertEquals("These are the stones upon your path:\n1.[T][ ] read book\n2.[T][ ] buy milk",
                 Bobby.handleCommand("list", tasks));
-        assertEquals("Here are the matching tasks in your list:\n1.[T][ ] read book",
+        assertEquals("The pond reflects these matching ripples:\n1.[T][ ] read book",
                 Bobby.handleCommand("find book", tasks));
-        assertEquals("Here are the matching tasks in your list:",
+        assertEquals("The pond reflects these matching ripples:",
                 Bobby.handleCommand("find chocolate", tasks));
     }
 }
