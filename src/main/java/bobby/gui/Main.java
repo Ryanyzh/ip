@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
     private static final double WINDOW_HEIGHT = 600.0;
     private static final double WINDOW_WIDTH = 400.0;
+    private static final double MIN_WINDOW_HEIGHT = 420.0;
+    private static final double MIN_WINDOW_WIDTH = 360.0;
 
     private final Bobby bobby = new Bobby();
 
@@ -32,9 +34,11 @@ public class Main extends Application {
         fxmlLoader.<MainWindow>getController().setBobby(bobby);
 
         stage.setTitle("Bobby");
-        stage.setResizable(false);
-        stage.setMinHeight(WINDOW_HEIGHT);
-        stage.setMinWidth(WINDOW_WIDTH);
+        stage.setResizable(true);
+        stage.setMinHeight(MIN_WINDOW_HEIGHT);
+        stage.setMinWidth(MIN_WINDOW_WIDTH);
+        stage.setHeight(WINDOW_HEIGHT);
+        stage.setWidth(WINDOW_WIDTH);
         stage.setScene(scene);
         stage.show();
     }
