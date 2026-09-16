@@ -14,6 +14,9 @@ import javafx.scene.layout.VBox;
  * Controller for Bobby's main GUI window.
  */
 public class MainWindow extends AnchorPane {
+    private static final String COMMAND_ERROR_PREFIX = "Bobby needs a clearer command:";
+    private static final String LOADING_ERROR_PREFIX = "Bobby needs a clearer save file:";
+
     private final Image userImage = new Image(getClass().getResourceAsStream("/images/heh.png"));
     private final Image bobbyImage = new Image(getClass().getResourceAsStream("/images/huh.gif"));
 
@@ -53,7 +56,9 @@ public class MainWindow extends AnchorPane {
         assert bobby != null : "Main should inject a Bobby instance.";
 
         this.bobby = bobby;
-        dialogContainer.getChildren().add(DialogBox.getBobbyDialog(bobby.getWelcomeMessage(), bobbyImage));
+        String welcomeMessage = bobby.getWelcomeMessage();
+        dialogContainer.getChildren().add(
+                DialogBox.getBobbyDialog(welcomeMessage, bobbyImage, isErrorResponse(welcomeMessage)));
     }
 
     /**
@@ -71,11 +76,17 @@ public class MainWindow extends AnchorPane {
         String bobbyText = bobby.getResponse(userText);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(userText, userImage),
-                DialogBox.getBobbyDialog(bobbyText, bobbyImage));
+                DialogBox.getBobbyDialog(bobbyText, bobbyImage, isErrorResponse(bobbyText)));
         userInput.clear();
 
         if (bobby.isExitCommand(userText)) {
             Platform.exit();
         }
+    }
+
+    private boolean isErrorResponse(String response) {
+        assert response != null : "Response should be non-null before styling.";
+
+        return response.startsWith(COMMAND_ERROR_PREFIX) || response.startsWith(LOADING_ERROR_PREFIX);
     }
 }
