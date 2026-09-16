@@ -209,7 +209,7 @@ Tagged this task:
   [T][ ] read book #reading
 ____________________________________________________________
 ____________________________________________________________
-Bobby needs a clearer command: Tags should start with # and contain no spaces.
+Bobby needs a clearer command: Tags should start with # and use only letters, numbers, underscores, or hyphens.
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
@@ -401,6 +401,85 @@ Bobby needs a clearer command: I couldn't find that task number.
 ____________________________________________________________
 ____________________________________________________________
 Bobby needs a clearer command: Task numbers should be whole numbers.
+____________________________________________________________
+____________________________________________________________
+Goodbye! Bobby signing out...
+____________________________________________________________
+```
+
+## Test Case: Reject malformed and duplicate details
+
+Aim: Verify that Bobby normalizes spacing and rejects duplicate tasks, invalid times, unsafe descriptions, and extra task numbers.
+
+```input
+todo   read    book
+todo read book
+deadline report /by 2019-02-30
+deadline report /by 2019-12-02 /by 2019-12-03
+event meeting /from 2019-12-02 1600 /to 2019-12-02 1400
+event sync /from 2019-12-02 1400 /to 2019-12-02 1600
+tag 2 #team
+tag 2 #team
+tag 2 #bad!
+todo pipes | break
+mark 1 2
+list
+bye
+```
+
+```expected
+____________________________________________________________
+ ____        _     _           
+| __ )  ___ | |__ | |__  _   _ 
+|  _ \ / _ \| '_ \| '_ \| | | |
+| |_) | (_) | |_) | |_) | |_| |
+|____/ \___/|_.__/|_.__/ \__, |
+                         |___/ 
+Hello! I'm Bobby.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] read book
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Bobby needs a clearer command: That task is already in your list.
+____________________________________________________________
+____________________________________________________________
+Bobby needs a clearer command: Please use a date format like 2019-12-02 or 2/12/2019 1800.
+____________________________________________________________
+____________________________________________________________
+Bobby needs a clearer command: Please include /by only once.
+____________________________________________________________
+____________________________________________________________
+Bobby needs a clearer command: The event start time should be before the end time.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [E][ ] sync (from: Dec 2 2019, 2:00pm to: Dec 2 2019, 4:00pm)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Tagged this task:
+  [E][ ] sync (from: Dec 2 2019, 2:00pm to: Dec 2 2019, 4:00pm) #team
+____________________________________________________________
+____________________________________________________________
+Bobby needs a clearer command: That task already has this tag.
+____________________________________________________________
+____________________________________________________________
+Bobby needs a clearer command: Tags should start with # and use only letters, numbers, underscores, or hyphens.
+____________________________________________________________
+____________________________________________________________
+Bobby needs a clearer command: Descriptions cannot contain | or control characters.
+____________________________________________________________
+____________________________________________________________
+Bobby needs a clearer command: Please provide only one task number after mark.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][ ] read book
+2.[E][ ] sync (from: Dec 2 2019, 2:00pm to: Dec 2 2019, 4:00pm) #team
 ____________________________________________________________
 ____________________________________________________________
 Goodbye! Bobby signing out...

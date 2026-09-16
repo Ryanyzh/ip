@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import bobby.BobbyException;
+
 /**
  * Represents one task in Bobby's in-memory task list.
  */
@@ -36,6 +38,15 @@ public class Task {
      */
     public String toStorageString() {
         return typeAndStatusStorageString() + " | " + description + tagsStorageString();
+    }
+
+    /**
+     * Returns a stable key used to detect duplicate tasks.
+     *
+     * @return task type and core details, without status or tags.
+     */
+    public String getIdentityKey() {
+        return type.getSymbol() + " | " + description;
     }
 
     /**
@@ -84,10 +95,15 @@ public class Task {
      * Adds a tag to this task.
      *
      * @param tag tag text, including the leading #.
+     * @throws BobbyException if the tag is already present.
      */
-    public void addTag(String tag) {
+    public void addTag(String tag) throws BobbyException {
         assert tag != null : "Task tag should be non-null.";
         assert isValidTag(tag) : "Task tag should be valid.";
+
+        if (tags.contains(tag)) {
+            throw new BobbyException("That task already has this tag.");
+        }
         tags.add(tag);
     }
 
@@ -98,7 +114,19 @@ public class Task {
      * @return true if the tag starts with # and contains no spaces.
      */
     public static boolean isValidTag(String tag) {
-        return tag != null && tag.startsWith("#") && tag.length() > 1 && !tag.contains(" ");
+        return tag != null && tag.matches("#[A-Za-z0-9][A-Za-z0-9_-]*");
+    }
+
+    /**
+     * Returns whether text is safe to use as a task description.
+     *
+     * @param description task description to check.
+     * @return true if the description can be displayed and stored safely.
+     */
+    public static boolean isValidDescription(String description) {
+        return description != null && !description.isBlank()
+                && !description.contains("|")
+                && description.chars().noneMatch(Character::isISOControl);
     }
 
     /**

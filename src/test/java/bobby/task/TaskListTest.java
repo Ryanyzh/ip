@@ -3,6 +3,7 @@ package bobby.task;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -10,12 +11,14 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import bobby.BobbyException;
+
 /**
  * Tests task-list operations that mutate Bobby's in-memory task collection.
  */
 class TaskListTest {
     @Test
-    void add_appendsTaskAndIncreasesSize() {
+    void add_appendsTaskAndIncreasesSize() throws BobbyException {
         TaskList taskList = new TaskList(new ArrayList<>());
         Todo task = new Todo("borrow book");
 
@@ -26,7 +29,16 @@ class TaskListTest {
     }
 
     @Test
-    void find_keywordMatchesDescriptions_returnsMatchingTasksInOrder() {
+    void add_duplicateTask_throwsBobbyException() throws BobbyException {
+        TaskList taskList = new TaskList(new ArrayList<>());
+
+        taskList.add(new Todo("borrow book"));
+
+        assertThrows(BobbyException.class, () -> taskList.add(new Todo("borrow book")));
+    }
+
+    @Test
+    void find_keywordMatchesDescriptions_returnsMatchingTasksInOrder() throws BobbyException {
         TaskList taskList = new TaskList(new ArrayList<>());
         Todo firstTask = new Todo("read book");
         Todo secondTask = new Todo("buy milk");
@@ -43,7 +55,7 @@ class TaskListTest {
     }
 
     @Test
-    void find_keywordMatchesTags_returnsMatchingTasksInOrder() {
+    void find_keywordMatchesTags_returnsMatchingTasksInOrder() throws BobbyException {
         TaskList taskList = new TaskList(new ArrayList<>());
         Todo firstTask = new Todo("read book");
         Todo secondTask = new Todo("buy milk");
@@ -59,7 +71,7 @@ class TaskListTest {
     }
 
     @Test
-    void find_keywordDoesNotMatchAnyDescription_returnsEmptyList() {
+    void find_keywordDoesNotMatchAnyDescription_returnsEmptyList() throws BobbyException {
         TaskList taskList = new TaskList(new ArrayList<>());
         taskList.add(new Todo("read book"));
 
@@ -67,7 +79,7 @@ class TaskListTest {
     }
 
     @Test
-    void markAndUnmark_updatesSelectedTaskOnly() {
+    void markAndUnmark_updatesSelectedTaskOnly() throws BobbyException {
         TaskList taskList = new TaskList(new ArrayList<>());
         Todo firstTask = new Todo("first");
         Todo secondTask = new Todo("second");
@@ -87,7 +99,7 @@ class TaskListTest {
     }
 
     @Test
-    void delete_removesSelectedTaskAndKeepsRemainingOrder() {
+    void delete_removesSelectedTaskAndKeepsRemainingOrder() throws BobbyException {
         TaskList taskList = new TaskList(new ArrayList<>());
         Todo firstTask = new Todo("first");
         Todo secondTask = new Todo("second");
@@ -105,7 +117,7 @@ class TaskListTest {
     }
 
     @Test
-    void addTag_addsTagToSelectedTaskOnly() {
+    void addTag_addsTagToSelectedTaskOnly() throws BobbyException {
         TaskList taskList = new TaskList(new ArrayList<>());
         Todo firstTask = new Todo("first");
         Todo secondTask = new Todo("second");
@@ -121,7 +133,16 @@ class TaskListTest {
     }
 
     @Test
-    void isValidIndex_checksLowerAndUpperBounds() {
+    void addTag_duplicateTag_throwsBobbyException() throws BobbyException {
+        TaskList taskList = new TaskList(new ArrayList<>());
+        taskList.add(new Todo("first"));
+        taskList.addTag(0, "#fun");
+
+        assertThrows(BobbyException.class, () -> taskList.addTag(0, "#fun"));
+    }
+
+    @Test
+    void isValidIndex_checksLowerAndUpperBounds() throws BobbyException {
         TaskList taskList = new TaskList(new ArrayList<>());
         taskList.add(new Todo("only task"));
 
@@ -143,7 +164,7 @@ class TaskListTest {
     }
 
     @Test
-    void asList_mutatingReturnedList_doesNotChangeTaskList() {
+    void asList_mutatingReturnedList_doesNotChangeTaskList() throws BobbyException {
         TaskList taskList = new TaskList(new ArrayList<>());
         taskList.add(new Todo("only task"));
 

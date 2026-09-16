@@ -48,4 +48,14 @@ public class Event extends Task {
         return typeAndStatusStorageString() + " | " + getDescription()
                 + " | " + from + " | " + to + tagsStorageString();
     }
+
+    /**
+     * Returns a stable key used to detect duplicate events.
+     *
+     * @return event type, description, start date/time, and end date/time.
+     */
+    @Override
+    public String getIdentityKey() {
+        return super.getIdentityKey() + " | " + from + " | " + to;
+    }
 }

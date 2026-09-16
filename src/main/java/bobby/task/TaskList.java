@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import bobby.BobbyException;
+
 /**
  * Stores the task list and provides operations that change or inspect it.
  */
@@ -24,9 +26,13 @@ public class TaskList {
      * Adds a task to the list.
      *
      * @param task task to add.
+     * @throws BobbyException if the same task already exists.
      */
-    public void add(Task task) {
+    public void add(Task task) throws BobbyException {
         assert task != null : "Cannot add a null task.";
+        if (containsDuplicateOf(task)) {
+            throw new BobbyException("That task is already in your list.");
+        }
         tasks.add(task);
     }
 
@@ -59,8 +65,9 @@ public class TaskList {
      * @param taskIndex index of task to tag.
      * @param tag tag to add.
      * @return tagged task.
+     * @throws BobbyException if the tag is already present.
      */
-    public Task addTag(int taskIndex, String tag) {
+    public Task addTag(int taskIndex, String tag) throws BobbyException {
         assert isValidIndex(taskIndex) : "Tag should receive a valid task index.";
         assert Task.isValidTag(tag) : "Tag should be valid before adding.";
 
@@ -121,5 +128,10 @@ public class TaskList {
      */
     public List<Task> asList() {
         return new ArrayList<>(tasks);
+    }
+
+    private boolean containsDuplicateOf(Task task) {
+        return tasks.stream()
+                .anyMatch(existingTask -> existingTask.getIdentityKey().equals(task.getIdentityKey()));
     }
 }

@@ -41,4 +41,14 @@ public class Deadline extends Task {
     public String toStorageString() {
         return typeAndStatusStorageString() + " | " + getDescription() + " | " + by + tagsStorageString();
     }
+
+    /**
+     * Returns a stable key used to detect duplicate deadlines.
+     *
+     * @return deadline type, description, and due date/time.
+     */
+    @Override
+    public String getIdentityKey() {
+        return super.getIdentityKey() + " | " + by;
+    }
 }

@@ -20,6 +20,8 @@ class DateTimeParserTest {
         assertEquals(LocalDateTime.of(2019, 12, 2, 18, 0),
                 DateTimeParser.parse("2019-12-02 1800"));
         assertEquals(LocalDateTime.of(2019, 12, 2, 18, 0),
+                DateTimeParser.parse("  2019-12-02   1800  "));
+        assertEquals(LocalDateTime.of(2019, 12, 2, 18, 0),
                 DateTimeParser.parse("2/12/2019 1800"));
         assertEquals(LocalDateTime.of(2019, 12, 2, 18, 0),
                 DateTimeParser.parse("2019-12-02T18:00"));
@@ -28,6 +30,8 @@ class DateTimeParserTest {
     @Test
     void parse_invalidDateTime_throwsBobbyException() {
         assertThrows(BobbyException.class, () -> DateTimeParser.parse("no idea"));
+        assertThrows(BobbyException.class, () -> DateTimeParser.parse("2019-02-30"));
+        assertThrows(BobbyException.class, () -> DateTimeParser.parse("30/2/2019 1800"));
     }
 
     @Test

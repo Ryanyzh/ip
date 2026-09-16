@@ -3,6 +3,7 @@ package bobby.storage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +51,11 @@ public class Storage {
             List<String> lines = Files.readAllLines(DATA_FILE);
             for (String line : lines) {
                 if (!line.isBlank()) {
-                    tasks.add(parseTask(line));
+                    Task task = parseTask(line);
+                    if (containsDuplicateTask(tasks, task)) {
+                        throw new BobbyException("The saved task file contains duplicate tasks.");
+                    }
+                    tasks.add(task);
                 }
             }
         } catch (IOException e) {
@@ -142,6 +147,7 @@ public class Storage {
         if (!hasValidFieldCount(parts, TODO_FIELD_COUNT)) {
             throw new BobbyException("The saved task file contains an invalid todo.");
         }
+        validateSavedDescription(parts[DESCRIPTION_INDEX]);
         Todo todo = new Todo(parts[DESCRIPTION_INDEX]);
         restoreTags(todo, parts, TODO_FIELD_COUNT);
         return todo;
@@ -158,6 +164,7 @@ public class Storage {
         if (!hasValidFieldCount(parts, DEADLINE_FIELD_COUNT)) {
             throw new BobbyException("The saved task file contains an invalid deadline.");
         }
+        validateSavedDescription(parts[DESCRIPTION_INDEX]);
         Deadline deadline = new Deadline(parts[DESCRIPTION_INDEX], DateTimeParser.parse(parts[DEADLINE_BY_INDEX]));
         restoreTags(deadline, parts, DEADLINE_FIELD_COUNT);
         return deadline;
@@ -174,8 +181,8 @@ public class Storage {
         if (!hasValidFieldCount(parts, EVENT_FIELD_COUNT)) {
             throw new BobbyException("The saved task file contains an invalid event.");
         }
-        Event event = new Event(parts[DESCRIPTION_INDEX], DateTimeParser.parse(parts[EVENT_FROM_INDEX]),
-                DateTimeParser.parse(parts[EVENT_TO_INDEX]));
+        validateSavedDescription(parts[DESCRIPTION_INDEX]);
+        Event event = createValidEvent(parts);
         restoreTags(event, parts, EVENT_FIELD_COUNT);
         return event;
     }
@@ -212,5 +219,25 @@ public class Storage {
             }
             task.addTag(tag);
         }
+    }
+
+    private static Event createValidEvent(String[] parts) throws BobbyException {
+        LocalDateTime from = DateTimeParser.parse(parts[EVENT_FROM_INDEX]);
+        LocalDateTime to = DateTimeParser.parse(parts[EVENT_TO_INDEX]);
+        if (!from.isBefore(to)) {
+            throw new BobbyException("The saved task file contains an event with an invalid time range.");
+        }
+        return new Event(parts[DESCRIPTION_INDEX], from, to);
+    }
+
+    private static void validateSavedDescription(String description) throws BobbyException {
+        if (!Task.isValidDescription(description)) {
+            throw new BobbyException("The saved task file contains an invalid description.");
+        }
+    }
+
+    private static boolean containsDuplicateTask(List<Task> tasks, Task task) {
+        return tasks.stream()
+                .anyMatch(existingTask -> existingTask.getIdentityKey().equals(task.getIdentityKey()));
     }
 }
