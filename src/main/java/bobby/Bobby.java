@@ -69,7 +69,7 @@ public class Bobby {
      * @return true if the command is bye.
      */
     public boolean isExitCommand(String command) {
-        return command.equals(BYE_COMMAND);
+        return Parser.normalizeCommand(command).equals(BYE_COMMAND);
     }
 
     /**
@@ -80,6 +80,7 @@ public class Bobby {
      */
     public String getResponse(String command) {
         assert command != null : "GUI should pass a non-null command.";
+        command = Parser.normalizeCommand(command);
         if (isExitCommand(command)) {
             return "Goodbye! Bobby signing out...";
         }
@@ -103,6 +104,7 @@ public class Bobby {
         assert command != null : "Command should be non-null before handling.";
         assert tasks != null : "Task list should be non-null before handling.";
 
+        command = Parser.normalizeCommand(command);
         if (command.equals(LIST_COMMAND)) {
             return handleList(tasks);
         } else if (Parser.isFind(command)) {

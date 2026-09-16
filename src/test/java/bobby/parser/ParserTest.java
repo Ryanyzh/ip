@@ -24,6 +24,7 @@ class ParserTest {
     void isCommand_matchesExactCommandOrCommandFollowedBySpace_returnsTrue() {
         assertTrue(Parser.isCommand("todo", "todo"));
         assertTrue(Parser.isCommand("todo read book", "todo"));
+        assertTrue(Parser.isCommand("  todo   read book  ", "todo"));
     }
 
     @Test
@@ -58,13 +59,14 @@ class ParserTest {
 
     @Test
     void parseTask_validTaskCommands_returnsCorrectTaskTypesAndDisplayText() throws BobbyException {
-        assertInstanceOf(Todo.class, Parser.parseTask("todo borrow book"));
+        Todo todo = assertInstanceOf(Todo.class, Parser.parseTask("todo   borrow   book"));
 
         Deadline deadline = assertInstanceOf(Deadline.class,
                 Parser.parseTask("deadline return book /by 2019-12-02"));
         Event event = assertInstanceOf(Event.class,
                 Parser.parseTask("event meeting /from 2019-12-02 1400 /to 2019-12-02 1600"));
 
+        assertEquals("[T][ ] borrow book", todo.toString());
         assertEquals("[D][ ] return book (by: Dec 2 2019)", deadline.toString());
         assertEquals("[E][ ] meeting (from: Dec 2 2019, 2:00pm to: Dec 2 2019, 4:00pm)",
                 event.toString());
@@ -75,8 +77,17 @@ class ParserTest {
         assertThrows(BobbyException.class, () -> Parser.parseTask("todo"));
         assertThrows(BobbyException.class, () -> Parser.parseTask("deadline return book"));
         assertThrows(BobbyException.class, () -> Parser.parseTask("deadline return book /by"));
+        assertThrows(BobbyException.class, () -> Parser.parseTask(
+                "deadline return book /by 2019-12-02 /by 2019-12-03"));
         assertThrows(BobbyException.class, () -> Parser.parseTask("event meeting /from 2019-12-02 1400"));
         assertThrows(BobbyException.class, () -> Parser.parseTask("event meeting /from 2019-12-02 1400 /to"));
+        assertThrows(BobbyException.class, () -> Parser.parseTask(
+                "event meeting /from 2019-12-02 1400 /to 2019-12-02 1400"));
+        assertThrows(BobbyException.class, () -> Parser.parseTask(
+                "event meeting /from 2019-12-02 1600 /to 2019-12-02 1400"));
+        assertThrows(BobbyException.class, () -> Parser.parseTask(
+                "event meeting /from 2019-12-02 1400 /from 2019-12-02 1500 /to 2019-12-02 1600"));
+        assertThrows(BobbyException.class, () -> Parser.parseTask("todo read | book"));
         assertThrows(BobbyException.class, () -> Parser.parseTask("blah"));
     }
 
@@ -86,16 +97,17 @@ class ParserTest {
         taskList.add(new Todo("first"));
         taskList.add(new Todo("second"));
 
-        assertEquals(0, Parser.parseTaskIndex("mark 1", "mark", taskList));
+        assertEquals(0, Parser.parseTaskIndex("mark   1", "mark", taskList));
         assertEquals(1, Parser.parseTaskIndex("delete 2", "delete", taskList));
     }
 
     @Test
-    void parseTaskIndex_missingInvalidOrOutOfRangeTaskNumber_throwsBobbyException() {
+    void parseTaskIndex_missingInvalidOrOutOfRangeTaskNumber_throwsBobbyException() throws BobbyException {
         TaskList taskList = new TaskList(new ArrayList<>());
         taskList.add(new Todo("first"));
 
         assertThrows(BobbyException.class, () -> Parser.parseTaskIndex("mark", "mark", taskList));
+        assertThrows(BobbyException.class, () -> Parser.parseTaskIndex("mark 1 2", "mark", taskList));
         assertThrows(BobbyException.class, () -> Parser.parseTaskIndex("mark two", "mark", taskList));
         assertThrows(BobbyException.class, () -> Parser.parseTaskIndex("mark 0", "mark", taskList));
         assertThrows(BobbyException.class, () -> Parser.parseTaskIndex("mark 2", "mark", taskList));
@@ -106,14 +118,14 @@ class ParserTest {
         TaskList taskList = new TaskList(new ArrayList<>());
         taskList.add(new Todo("first"));
 
-        Parser.TagCommand tagCommand = Parser.parseTagCommand("tag 1 #fun", taskList);
+        Parser.TagCommand tagCommand = Parser.parseTagCommand("  tag   1   #fun  ", taskList);
 
         assertEquals(0, tagCommand.taskIndex());
         assertEquals("#fun", tagCommand.tag());
     }
 
     @Test
-    void parseTagCommand_missingInvalidOrOutOfRangeArguments_throwsBobbyException() {
+    void parseTagCommand_missingInvalidOrOutOfRangeArguments_throwsBobbyException() throws BobbyException {
         TaskList taskList = new TaskList(new ArrayList<>());
         taskList.add(new Todo("first"));
 
@@ -123,5 +135,6 @@ class ParserTest {
         assertThrows(BobbyException.class, () -> Parser.parseTagCommand("tag 2 #fun", taskList));
         assertThrows(BobbyException.class, () -> Parser.parseTagCommand("tag 1 fun", taskList));
         assertThrows(BobbyException.class, () -> Parser.parseTagCommand("tag 1 #", taskList));
+        assertThrows(BobbyException.class, () -> Parser.parseTagCommand("tag 1 #bad!", taskList));
     }
 }
