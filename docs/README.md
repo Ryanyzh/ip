@@ -1,10 +1,104 @@
+<style>
+  :root {
+    --bobby-ink: #1d2433;
+    --bobby-muted: #5e6a7d;
+    --bobby-panel: #f7f9fc;
+    --bobby-panel-strong: #eef4ff;
+    --bobby-accent: #2266cc;
+    --bobby-border: #dbe4f0;
+  }
+
+  .bobby-hero {
+    padding: 2rem;
+    margin: 0 0 1.5rem;
+    border: 1px solid var(--bobby-border);
+    border-radius: 14px;
+    background:
+      linear-gradient(135deg, rgba(34, 102, 204, 0.12), transparent 55%),
+      var(--bobby-panel);
+  }
+
+  .bobby-hero h1 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: var(--bobby-ink);
+    font-size: 2.4rem;
+  }
+
+  .bobby-hero p {
+    max-width: 46rem;
+    margin-bottom: 0;
+    color: var(--bobby-muted);
+    font-size: 1.05rem;
+  }
+
+  .bobby-screenshot {
+    display: block;
+    max-width: 100%;
+    margin: 1.5rem auto 2rem;
+    border: 1px solid var(--bobby-border);
+    border-radius: 12px;
+    box-shadow: 0 16px 40px rgba(29, 36, 51, 0.16);
+  }
+
+  .bobby-toc {
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0 2rem;
+    border: 1px solid var(--bobby-border);
+    border-radius: 12px;
+    background: var(--bobby-panel);
+  }
+
+  .bobby-toc strong {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .bobby-callout {
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+    border-left: 4px solid var(--bobby-accent);
+    border-radius: 8px;
+    background: var(--bobby-panel-strong);
+  }
+
+  .bobby-section {
+    padding-top: 0.25rem;
+    margin-top: 2rem;
+  }
+
+  .bobby-top-link {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+</style>
+
+<div class="bobby-hero" markdown="1">
+
 # Bobby User Guide
 
 Bobby is a desktop chatbot for tracking todos, deadlines, events, and tags.
 It is designed for users who prefer typing quick commands while still using a
 friendly GUI.
 
-![Bobby GUI screenshot](Ui.png)
+</div>
+
+<img src="Ui.png" alt="Bobby GUI screenshot" class="bobby-screenshot">
+
+<div class="bobby-toc" markdown="1">
+
+**On this page**
+
+- [Quick Start](#quick-start)
+- [Features](#features)
+- [Date and Time Formats](#date-and-time-formats)
+- [Error Handling](#error-handling)
+- [Saving Data](#saving-data)
+- [Command Summary](#command-summary)
+- [AI Assistance Acknowledgement](#ai-assistance-acknowledgement)
+
+</div>
 
 ## Quick Start
 
@@ -28,6 +122,8 @@ friendly GUI.
 
 ### Notes About Command Formats
 
+<div class="bobby-callout" markdown="1">
+
 - Words in `UPPER_CASE` are values you provide.
   For example, in `todo DESCRIPTION`, replace `DESCRIPTION` with
   `read CS2103 notes`.
@@ -37,6 +133,8 @@ friendly GUI.
 - Dates can be written as `yyyy-MM-dd`, `yyyy-MM-dd HHmm`, or
   `d/M/yyyy HHmm`.
 - Descriptions cannot be empty and cannot contain `|`.
+
+</div>
 
 ### Adding a Todo: `todo`
 
@@ -258,6 +356,8 @@ Dates without a time are treated as midnight and displayed without a time.
 
 ## Error Handling
 
+<div class="bobby-callout" markdown="1">
+
 Bobby explains common mistakes and keeps running. For example:
 
 - `todo` gives an error because the description is missing.
@@ -273,7 +373,11 @@ Invalid commands do not change your existing tasks. If `data/bobby.txt` is
 missing, Bobby starts with an empty task list. If the file is corrupted, Bobby
 shows a loading error and still starts.
 
+</div>
+
 ## Saving Data
+
+<div class="bobby-callout" markdown="1">
 
 Bobby saves tasks automatically after every command that changes the task list.
 The data file is stored at:
@@ -286,6 +390,8 @@ You do not need to edit this file manually.
 
 If you want to reset Bobby's saved tasks, close Bobby and delete the file.
 Bobby will create a fresh file when a new task is saved.
+
+</div>
 
 ## Command Summary
 
